@@ -7,16 +7,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/background_gradient1</item>
         <item name="buttonStyle">@style/defaultButton</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
-
+    <!--below styling default button-->
     <style name="defaultButton" parent="Widget.AppCompat.Button">
         <item name="android:textSize">10pt</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/round_corners</item>
     </style>
 
-    <style name="titleStyle">
 
-    </style>
 </resources>

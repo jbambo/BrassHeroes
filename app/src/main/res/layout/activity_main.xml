@@ -40,16 +40,15 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/newGame"
-            android:textSize="10pt"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp" />
+
         <Button
             android:id="@+id/continueBtn"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_below="@+id/newGameBtn"
             android:text="@string/continueGame"
-            android:textSize="10pt"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

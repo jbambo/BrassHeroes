@@ -1,9 +1,9 @@
 package com.example.brassheroes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     //TODO make logo png in the mipmap folder 200x200 px i think

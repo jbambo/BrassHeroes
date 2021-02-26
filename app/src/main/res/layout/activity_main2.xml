@@ -30,10 +30,11 @@
             android:id="@+id/playersName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/iamText"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/iamText"
             android:background="@color/transparent"
             android:hint="@string/playersName"
+            android:inputType="text"
             android:textColorHint="@color/grey"
             android:textSize="10pt" />
     </RelativeLayout>
@@ -51,9 +52,13 @@
             android:id="@+id/class1"
             android:layout_width="100dp"
             android:layout_height="150dp"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/background_border"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/knightProt"
+            android:padding="1dp"/>
 
         <Button
             android:id="@+id/btnClass1"
@@ -68,9 +73,10 @@
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@id/class1"
+            android:layout_toEndOf="@id/class1"
             android:background="@drawable/background_border"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/knightProt"
+            android:padding="1dp"/>
 
         <Button
             android:id="@+id/btnClass2"
@@ -78,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/class1"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@id/btnClass1"
+            android:layout_toEndOf="@id/btnClass1"
             android:text="@string/class2" />
 
         <ImageView
@@ -86,9 +92,10 @@
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@id/class2"
+            android:layout_toEndOf="@id/class2"
             android:background="@drawable/background_border"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/knightProt"
+            android:padding="1dp"/>
 
         <Button
             android:id="@+id/btnClass3"
@@ -96,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/class1"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@id/btnClass2"
+            android:layout_toEndOf="@id/btnClass2"
             android:text="@string/class3" />
     </RelativeLayout>
 

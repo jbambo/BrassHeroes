@@ -8,14 +8,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO make logo png in the mipmap folder 200x200 px i think
     //TODO title design (png or styled text or combined logo+title as png?)
-    //TODO design other screens
+
 
     Button startBtn;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set the immersive mode(complete fullscreen)

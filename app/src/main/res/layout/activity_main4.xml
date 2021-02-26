@@ -28,7 +28,7 @@
             android:layout_below="@+id/enemyName"
             android:background="@drawable/background_border"
             android:padding="1dp"
-            android:src="@drawable/enemyWizard" />
+            android:src="@drawable/enemy_wizard" />
     </RelativeLayout>
 
     <RelativeLayout

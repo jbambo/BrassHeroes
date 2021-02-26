@@ -57,7 +57,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/background_border"
-            android:src="@drawable/knightProt"
+            android:src="@drawable/knight_prot"
             android:padding="1dp"/>
 
         <Button
@@ -75,7 +75,7 @@
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/class1"
             android:background="@drawable/background_border"
-            android:src="@drawable/knightProt"
+            android:src="@drawable/knight_prot"
             android:padding="1dp"/>
 
         <Button
@@ -94,7 +94,7 @@
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/class2"
             android:background="@drawable/background_border"
-            android:src="@drawable/knightProt"
+            android:src="@drawable/knight_prot"
             android:padding="1dp"/>
 
         <Button

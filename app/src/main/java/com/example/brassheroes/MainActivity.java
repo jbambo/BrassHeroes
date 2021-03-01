@@ -8,10 +8,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO title design (png or styled text or combined logo+title as png?)
 
 
-    Button startBtn;
+    Button startBtn, contBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +23,27 @@ public class MainActivity extends AppCompatActivity {
         //delcare global var/obj/btn
         startBtn = findViewById(R.id.newGameBtn);
 
-
     }
             public void clickStartBtn(View view) {
-                Button startBtn = findViewById(R.id.newGameBtn);
-                opennewGame();
+                //Button startBtn = findViewById(R.id.newGameBtn);
+                openNewGame();
         }
 
 
-            public void opennewGame() {
+            public void openNewGame() {
                 //use to change views
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 startActivity(intent);
+    }
+
+
+    public void clickContBtn(View view){
+        contGame();
+    }
+
+    public void contGame(){
+        Intent intent = new Intent(MainActivity.this,MainActivity5.class);
+        startActivity(intent);
     }
 
 }

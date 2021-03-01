@@ -7,4 +7,7 @@
     <color name="transparent">#0000</color>
     <color name="grey">#BAB3B3</color>
     <color name="darkRed">#A70A0A</color>
+    <color name="darkGrey">#2C2C2C</color>
+
+    <color name="goldYellow">#DEAE1E</color>
 </resources>

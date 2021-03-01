@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:src="@drawable/logo_small"
+        android:src="@drawable/logo_med"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,8 @@
             android:layout_height="50dp"
             android:layout_below="@+id/newGameBtn"
             android:layout_margin="10dp"
-            android:text="@string/continueGame" />
+            android:text="@string/continueGame"
+            android:onClick="clickContBtn"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

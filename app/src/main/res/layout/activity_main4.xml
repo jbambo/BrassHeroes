@@ -39,7 +39,9 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enemyLayout">
+        app:layout_constraintTop_toBottomOf="@id/enemyLayout"
+        android:backgroundTint="@color/darkGrey"
+        android:backgroundTintMode="add">
 
         <ProgressBar
             android:id="@+id/enemyHealth"
@@ -47,7 +49,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/textEnemy"
+            android:layout_toEndOf="@+id/textEnemy"
             android:max="100"
             android:progress="100"
             android:progressTint="@color/darkRed"
@@ -84,6 +86,8 @@
             android:layout_below="@id/playerMessage"
             android:layout_centerHorizontal="true"
             android:background="@drawable/background_border"
+            android:backgroundTint="@color/darkGrey"
+            android:backgroundTintMode="add"
             android:padding="10dp">
 
             <ProgressBar
@@ -92,7 +96,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/textPlayer"
+                android:layout_toEndOf="@+id/textPlayer"
                 android:max="100"
                 android:progress="100"
                 android:progressTint="@color/darkRed"
@@ -120,8 +124,8 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_below="@id/attackBtn"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/eqBtn"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/eqBtn"
             android:text="Run" />
 
         <Button
@@ -129,7 +133,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_below="@id/attackBtn"
-            android:text="Inventory" />
+            android:text="@string/inventory" />
 
     </RelativeLayout>
 

@@ -24,25 +24,26 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.newGameBtn);
 
     }
-            public void clickStartBtn(View view) {
-                //Button startBtn = findViewById(R.id.newGameBtn);
-                openNewGame();
-        }
 
-
-            public void openNewGame() {
-                //use to change views
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
+    public void clickStartBtn(View view) {
+        //Button startBtn = findViewById(R.id.newGameBtn);
+        openNewGame();
     }
 
 
-    public void clickContBtn(View view){
+    public void openNewGame() {
+        //use to change views
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+        startActivity(intent);
+    }
+
+
+    public void clickContBtn(View view) {
         contGame();
     }
 
-    public void contGame(){
-        Intent intent = new Intent(MainActivity.this,MainActivity5.class);
+    public void contGame() {
+        Intent intent = new Intent(MainActivity.this, MainActivity5.class);
         startActivity(intent);
     }
 

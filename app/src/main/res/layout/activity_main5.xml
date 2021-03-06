@@ -7,19 +7,19 @@
 
 
     <ImageView
-        android:paddingVertical="10dp"
         android:id="@+id/mapImageView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="75dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="@color/darkGrey"
+        android:backgroundTintMode="add"
+        android:paddingVertical="10dp"
         android:src="@drawable/map_verticalv1"
         app:layout_constraintBottom_toTopOf="@id/playerStats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/background_border"
-        android:backgroundTint="@color/darkGrey"
-        android:backgroundTintMode="add"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
@@ -51,13 +51,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
+        android:background="@drawable/background_border"
+        android:backgroundTint="@color/darkGrey"
+        android:backgroundTintMode="add"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@id/mapActionLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/background_border"
-        android:backgroundTint="@color/darkGrey"
-        android:backgroundTintMode="add">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:id="@+id/playerRow1"

@@ -8,6 +8,7 @@
     <color name="grey">#BAB3B3</color>
     <color name="darkRed">#A70A0A</color>
     <color name="darkGrey">#2C2C2C</color>
-
+    <color name="btnCenter">#080D2B</color>
+    <color name="btnSides">#630303</color>
     <color name="goldYellow">#DEAE1E</color>
 </resources>

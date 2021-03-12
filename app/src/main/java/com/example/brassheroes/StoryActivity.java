@@ -1,11 +1,20 @@
 package com.example.brassheroes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class StoryActivity extends AppCompatActivity {
+
+    TextView storyText, storyTitle;
+
+    Button skipStory;
+
+    String[] stories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,5 +22,34 @@ public class StoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_story);
         int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
+        initControls();
+        rollStory();
+    }
+
+    private void rollStory() {
+        storyText.setText(loopString());
+    }
+
+    private String loopString() {
+        String temp = " wow, good storyline! ";
+        for (int i = 0; i < 10; i++) {
+            temp += temp;
+        }
+        return temp;
+    }
+
+    private void initControls() {
+
+        storyText = findViewById(R.id.storyText);
+        storyTitle = findViewById(R.id.storyTitle);
+
+        skipStory = findViewById(R.id.skipStory);
+        skipStory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StoryActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

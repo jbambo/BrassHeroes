@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="25dp">
 
     <RelativeLayout
         android:id="@+id/enemyLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,12 +36,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_border"
+        android:backgroundTint="@color/darkGrey"
+        android:backgroundTintMode="add"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enemyLayout"
-        android:backgroundTint="@color/darkGrey"
-        android:backgroundTintMode="add">
+        app:layout_constraintTop_toBottomOf="@id/enemyLayout">
 
         <ProgressBar
             android:id="@+id/enemyHealth"
@@ -115,25 +115,18 @@
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:layout_below="@+id/healthLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="25dp"
             android:text="Attack" />
 
         <Button
             android:id="@+id/runBtn"
             android:layout_width="180dp"
             android:layout_height="60dp"
-            android:layout_below="@id/attackBtn"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/eqBtn"
+            android:layout_alignBottom="@id/attackBtn"
+            android:layout_toEndOf="@id/attackBtn"
             android:text="Run" />
 
-        <Button
-            android:id="@+id/eqBtn"
-            android:layout_width="180dp"
-            android:layout_height="60dp"
-            android:layout_below="@id/attackBtn"
-            android:text="@string/inventory" />
 
     </RelativeLayout>
 

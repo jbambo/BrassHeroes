@@ -7,7 +7,7 @@
     android:padding="25dp">
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/storyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Story screen"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/storyText"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:textSize="18sp"
@@ -27,4 +27,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem/random" />
+    <Button
+        android:id="@+id/skipStory"
+        android:text="OKAY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/storyText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

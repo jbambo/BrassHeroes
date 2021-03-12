@@ -3,12 +3,19 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
     <color name="white">#FFFFFF</color>
     <color name="transparent">#0000</color>
     <color name="grey">#BAB3B3</color>
     <color name="darkRed">#A70A0A</color>
     <color name="darkGrey">#2C2C2C</color>
+
     <color name="btnCenter">#080D2B</color>
     <color name="btnSides">#630303</color>
+
+    <color name="btnCenterLight">#FBD786</color>
+    <color name="btnSide1Light">#f7797d</color>
+    <color name="btnSide2Light">#C6FFDD</color>
+
     <color name="goldYellow">#DEAE1E</color>
 </resources>

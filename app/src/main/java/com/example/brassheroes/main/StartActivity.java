@@ -1,5 +1,6 @@
 package com.example.brassheroes.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +10,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
-import com.example.brassheroes.characters.Entity;
+import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.characters.Knight;
 import com.example.brassheroes.characters.Paladin;
 import com.example.brassheroes.characters.Wizard;
@@ -26,13 +28,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText usernameTxt;
 
-    private Button btnClass1, btnClass2, btnClass3, btnStartGame;
+    private Button btnClass1;
+    private Button btnClass2;
+    private Button btnClass3;
 
-    private Entity player;
+    private GameEntity player;
 
     private String username;
 
-    private boolean correctInput, classPicked = false;
+    private boolean classPicked = false;
 
 
     @Override
@@ -54,7 +58,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         btnClass1 = findViewById(R.id.btnClass1);
         btnClass2 = findViewById(R.id.btnClass2);
         btnClass3 = findViewById(R.id.btnClass3);
-        btnStartGame = findViewById(R.id.startGame);
+        Button btnStartGame = findViewById(R.id.startGame);
 
         imgClass1.setOnClickListener(this);
         imgClass2.setOnClickListener(this);
@@ -72,27 +76,18 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void newGame() {
-        correctInput = check();
+        boolean correctInput = check();
         if (correctInput && classPicked) {
             player.setName(username);
-            Gson gson = new Gson();
-            String saveJson = gson.toJson(player);
-
-            try {
-                File file = new File(this.getFilesDir(), "Saved-" + username);
-                FileWriter fileWriter = new FileWriter(file);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(saveJson);
-                bufferedWriter.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            File file = new File(this.getFilesDir(), "Saved-" + username);
+            Persistence.saveData(player,file);
             Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("username", player.getName());
             startActivity(intent);
         }
     }
 
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -107,7 +102,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass3);
 
                 classPicked = true;
-                player= new Knight("knight");
+                player = new Knight("knight");
                 break;
 
             case R.id.imgPaladin:
@@ -121,7 +116,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass1);
 
                 classPicked = true;
-                player= new Paladin("paladin");
+                player = new Paladin("paladin");
 
                 break;
 
@@ -136,13 +131,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass2);
 
                 classPicked = true;
-                player= new Wizard("wizard");
+                player = new Wizard("wizard");
                 break;
 
             case R.id.startGame:
                 newGame();
         }
     }
+
+
 
     public void selectView(View v) {
         v.setBackgroundResource(R.drawable.gold_selected);

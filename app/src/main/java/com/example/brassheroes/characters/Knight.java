@@ -1,8 +1,6 @@
 package com.example.brassheroes.characters;
 
-public class Knight extends Entity {
-
-    String damageType = "physical";
+public class Knight extends GameEntity {
 
     public Knight(String profession) {
         super(profession);
@@ -10,9 +8,6 @@ public class Knight extends Entity {
         setArmor(10);
         setArmorInc(7);
         setMaxHealth(115);
-    }
-
-    public String getDamageType() {
-        return damageType;
+        setDamageType("physical");
     }
 }

@@ -8,19 +8,23 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
+import com.example.brassheroes.characters.GameEntity;
+
+import java.io.File;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String username;
-    private int playerLevel, mapProgress, playerClass;
+    private int mapProgress;
+
+    GameEntity player;
+
+    String username;
 
     private Button btnInventory, btnFight;
 
     private TextView playerName;
-
-    public MapActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +32,30 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_map);
         int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
-
+        getData();
         initControls();
+
+    }
+
+    //function to extract saved data
+    private void getData() {
+
+        //get the first files name
+        File[] files = getFilesDir().listFiles();
+        //select this file
+        File file = new File(getFilesDir(), files[0].getName());
+        try {
+            player = Persistence.getData(player, file);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initControls() {
-        username= getIntent().getStringExtra("username");
-        playerClass= getIntent().getIntExtra("playerClass",0);
 
         playerName = findViewById(R.id.playerNameMap);
-        playerName.setText(username);
+        playerName.setText(player.getName());
 
         btnFight = findViewById(R.id.btnFight);
         btnInventory = findViewById(R.id.btnInventory);

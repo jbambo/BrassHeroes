@@ -1,9 +1,20 @@
 package com.example.brassheroes.characters;
 
-public class Entity {
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+public class GameEntity {
 
     private String name;
     private String profession;
+    private String damageType;
     private int baseDamage = 15;
     private int damageInc = 10;
     private int currentDamage;
@@ -17,8 +28,40 @@ public class Entity {
     private int expNeeded = 100;
 
 
-    public Entity(String profession) {
+    public GameEntity(String name,
+                      String profession,
+                      String damageType,
+                      int baseDamage,
+                      int damageInc,
+                      int currentDamage,
+                      int armor,
+                      int armorInc,
+                      int health,
+                      int maxHealth,
+                      int healthInc,
+                      int level,
+                      int exp,
+                      int expNeeded) {
+
+        this.name = name;
         this.profession = profession;
+        this.damageType = damageType;
+        this.baseDamage = baseDamage;
+        this.damageInc = damageInc;
+        this.currentDamage = currentDamage;
+        this.armor = armor;
+        this.armorInc = armorInc;
+        this.health = health;
+        this.maxHealth = maxHealth;
+        this.healthInc = healthInc;
+        this.level = level;
+        this.exp = exp;
+        this.expNeeded = expNeeded;
+    }
+
+    public GameEntity(String profession) {
+        this.profession = profession;
+        this.currentDamage = getBaseDamage();
     }
 
     public String getProfession() {
@@ -144,4 +187,16 @@ public class Entity {
     public void setArmorInc(int armorInc) {
         this.armorInc = armorInc;
     }
+
+    public String getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(String damageType) {
+        this.damageType = damageType;
+    }
+
+
+
+
 }

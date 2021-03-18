@@ -9,18 +9,22 @@
         android:roundIcon="@mipmap/ic_brass_heroes_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity" />
-        <activity android:name=".FightActivity" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".StoryActivity" />
-        <activity android:name=".PlayerActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.StartActivity" />
+        <activity android:name=".main.FightActivity" />
+        <activity android:name=".main.MapActivity" />
+        <activity android:name=".main.StoryActivity" />
+        <activity android:name=".main.PlayerActivity" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.example.brassheroes.BackgroundSoundService"
+            android:enabled="true" />
     </application>
 
 </manifest>

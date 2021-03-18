@@ -1,4 +1,4 @@
-package com.example.brassheroes;
+package com.example.brassheroes.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.brassheroes.R;
 
 public class PlayerActivity extends AppCompatActivity {
     private Button btnGoBack;

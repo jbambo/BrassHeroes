@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartActivity">
+    tools:context=".main.StartActivity">
 
     <RelativeLayout
         android:id="@+id/playersNameLayout"
@@ -62,7 +62,7 @@
             android:src="@drawable/knight" />
 
         <ImageView
-            android:id="@+id/imgPriest"
+            android:id="@+id/imgPaladin"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
@@ -76,7 +76,7 @@
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toEndOf="@id/imgPriest"
+            android:layout_toEndOf="@id/imgPaladin"
             android:background="@drawable/btn_gradient"
             android:clickable="true"
             android:padding="1dp"
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
-            android:text="@string/class1"
+            android:text="@string/knightClass"
             android:clickable="false"/>
 
         <Button
@@ -98,7 +98,7 @@
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass1"
-            android:text="@string/class2"
+            android:text="@string/paladinClass"
             android:clickable="false"/>
 
         <Button
@@ -108,7 +108,7 @@
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass2"
-            android:text="@string/class3"
+            android:text="@string/wizardClass"
             android:clickable="false"/>
     </RelativeLayout>
 

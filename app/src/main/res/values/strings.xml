@@ -5,9 +5,9 @@
     <string name="continueGame">Continue</string>
     <string name="iam">I am: </string>
     <string name="playersName">Your Name…</string>
-    <string name="class1">Knight</string>
-    <string name="class2">Priest</string>
-    <string name="class3">Wizard</string>
+    <string name="knightClass">Knight</string>
+    <string name="paladinClass">Paladin</string>
+    <string name="wizardClass">Wizard</string>
     <string name="startGame">Start the adventure!</string>
     <string name="inventory">Inventory</string>
     <string name="embark">Embark!</string>

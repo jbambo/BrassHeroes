@@ -1,5 +1,6 @@
-package com.example.brassheroes;
+package com.example.brassheroes.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,11 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brassheroes.R;
+import com.example.brassheroes.characters.Entity;
+import com.example.brassheroes.characters.Knight;
+import com.example.brassheroes.characters.Paladin;
+import com.example.brassheroes.characters.Wizard;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -22,7 +28,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnClass1, btnClass2, btnClass3, btnStartGame;
 
-    private Profession playerClass;
+    private Entity player;
 
     private String username;
 
@@ -42,7 +48,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         usernameTxt = findViewById(R.id.username);
 
         imgClass1 = findViewById(R.id.imgKnight);
-        imgClass2 = findViewById(R.id.imgPriest);
+        imgClass2 = findViewById(R.id.imgPaladin);
         imgClass3 = findViewById(R.id.imgWizard);
 
         btnClass1 = findViewById(R.id.btnClass1);
@@ -54,9 +60,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         imgClass2.setOnClickListener(this);
         imgClass3.setOnClickListener(this);
         btnStartGame.setOnClickListener(this);
-
-
-
     }
 
     public boolean check() {
@@ -71,24 +74,21 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     public void newGame() {
         correctInput = check();
         if (correctInput && classPicked) {
-            Entity player = new Entity(username,playerClass);
-
+            player.setName(username);
             Gson gson = new Gson();
+            String saveJson = gson.toJson(player);
 
-            String saveJson= gson.toJson(player);
             try {
-                File file = new File(this.getFilesDir(),"Saved-"+username);
+                File file = new File(this.getFilesDir(), "Saved-" + username);
                 FileWriter fileWriter = new FileWriter(file);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 bufferedWriter.write(saveJson);
                 bufferedWriter.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-//            Intent intent = new Intent(this, MapActivity.class);
-//            intent.putExtra("username", username);
-//            intent.putExtra("playerClass", playerClass);
-//            startActivity(intent);
+            Intent intent = new Intent(this, MapActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -107,10 +107,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass3);
 
                 classPicked = true;
-                playerClass = new Knight();
+                player= new Knight("knight");
                 break;
 
-            case R.id.imgPriest:
+            case R.id.imgPaladin:
                 selectView(imgClass2);
                 frameView(btnClass2);
 
@@ -121,7 +121,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass1);
 
                 classPicked = true;
-                playerClass = new Priest();
+                player= new Paladin("paladin");
+
                 break;
 
             case R.id.imgWizard:
@@ -135,7 +136,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass2);
 
                 classPicked = true;
-                playerClass= new Wizard();
+                player= new Wizard("wizard");
                 break;
 
             case R.id.startGame:

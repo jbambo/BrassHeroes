@@ -1,4 +1,4 @@
-package com.example.brassheroes;
+package com.example.brassheroes.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.brassheroes.R;
 
 public class FightActivity extends AppCompatActivity implements View.OnClickListener {
 

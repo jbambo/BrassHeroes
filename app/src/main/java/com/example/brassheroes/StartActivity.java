@@ -1,6 +1,5 @@
 package com.example.brassheroes;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +7,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.gson.Gson;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,7 +22,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private Button btnClass1, btnClass2, btnClass3, btnStartGame;
 
-    private int playerClass;
+    private Profession playerClass;
 
     private String username;
 
@@ -36,9 +41,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     public void initControls() {
         usernameTxt = findViewById(R.id.username);
 
-        imgClass1 = findViewById(R.id.imgClass1);
-        imgClass2 = findViewById(R.id.imgClass2);
-        imgClass3 = findViewById(R.id.imgClass3);
+        imgClass1 = findViewById(R.id.imgKnight);
+        imgClass2 = findViewById(R.id.imgPriest);
+        imgClass3 = findViewById(R.id.imgWizard);
 
         btnClass1 = findViewById(R.id.btnClass1);
         btnClass2 = findViewById(R.id.btnClass2);
@@ -49,6 +54,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         imgClass2.setOnClickListener(this);
         imgClass3.setOnClickListener(this);
         btnStartGame.setOnClickListener(this);
+
+
 
     }
 
@@ -64,11 +71,24 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     public void newGame() {
         correctInput = check();
         if (correctInput && classPicked) {
-            //in the future save data to json file
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("username", username);
-            intent.putExtra("playerClass", playerClass);
-            startActivity(intent);
+            Entity player = new Entity(username,playerClass);
+
+            Gson gson = new Gson();
+
+            String saveJson= gson.toJson(player);
+            try {
+                File file = new File(this.getFilesDir(),"Saved-"+username);
+                FileWriter fileWriter = new FileWriter(file);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(saveJson);
+                bufferedWriter.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+//            Intent intent = new Intent(this, MapActivity.class);
+//            intent.putExtra("username", username);
+//            intent.putExtra("playerClass", playerClass);
+//            startActivity(intent);
         }
     }
 
@@ -76,7 +96,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgClass1:
+            case R.id.imgKnight:
                 selectView(imgClass1);
                 frameView(btnClass1);
 
@@ -87,10 +107,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass3);
 
                 classPicked = true;
-                playerClass = 1;
+                playerClass = new Knight();
                 break;
 
-            case R.id.imgClass2:
+            case R.id.imgPriest:
                 selectView(imgClass2);
                 frameView(btnClass2);
 
@@ -101,10 +121,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass1);
 
                 classPicked = true;
-                playerClass = 2;
+                playerClass = new Priest();
                 break;
 
-            case R.id.imgClass3:
+            case R.id.imgWizard:
                 selectView(imgClass3);
                 frameView(btnClass3);
 
@@ -115,7 +135,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass2);
 
                 classPicked = true;
-                playerClass = 3;
+                playerClass= new Wizard();
                 break;
 
             case R.id.startGame:

@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/playersNameLayout">
 
         <ImageView
-            android:id="@+id/imgClass1"
+            android:id="@+id/imgKnight"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_marginStart="5dp"
@@ -62,21 +62,21 @@
             android:src="@drawable/knight" />
 
         <ImageView
-            android:id="@+id/imgClass2"
+            android:id="@+id/imgPriest"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toEndOf="@id/imgClass1"
+            android:layout_toEndOf="@id/imgKnight"
             android:background="@drawable/btn_gradient"
             android:padding="1dp"
             android:src="@drawable/knight_prot" />
 
         <ImageView
-            android:id="@+id/imgClass3"
+            android:id="@+id/imgWizard"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
-            android:layout_toEndOf="@id/imgClass2"
+            android:layout_toEndOf="@id/imgPriest"
             android:background="@drawable/btn_gradient"
             android:clickable="true"
             android:padding="1dp"
@@ -86,7 +86,7 @@
             android:id="@+id/btnClass1"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imgClass1"
+            android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:text="@string/class1"
             android:clickable="false"/>
@@ -95,7 +95,7 @@
             android:id="@+id/btnClass2"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imgClass1"
+            android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass1"
             android:text="@string/class2"
@@ -105,7 +105,7 @@
             android:id="@+id/btnClass3"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imgClass1"
+            android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass2"
             android:text="@string/class3"

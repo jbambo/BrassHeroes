@@ -16,11 +16,8 @@ import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.characters.Knight;
 import com.example.brassheroes.characters.Paladin;
 import com.example.brassheroes.characters.Wizard;
-import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -80,7 +77,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         if (correctInput && classPicked) {
             player.setName(username);
             File file = new File(this.getFilesDir(), "Saved-" + username);
-            Persistence.saveData(player,file);
+            Persistence.saveData(player, file);
             Intent intent = new Intent(this, MapActivity.class);
             intent.putExtra("username", player.getName());
             startActivity(intent);
@@ -102,7 +99,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass3);
 
                 classPicked = true;
-                player = new Knight("knight");
+                player = new Knight();
                 break;
 
             case R.id.imgPaladin:
@@ -116,7 +113,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass1);
 
                 classPicked = true;
-                player = new Paladin("paladin");
+                player = new Paladin();
 
                 break;
 
@@ -131,14 +128,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 unselectView(btnClass2);
 
                 classPicked = true;
-                player = new Wizard("wizard");
+                player = new Wizard();
                 break;
 
             case R.id.startGame:
                 newGame();
         }
     }
-
 
 
     public void selectView(View v) {

@@ -69,7 +69,7 @@
             android:layout_toEndOf="@id/imgKnight"
             android:background="@drawable/btn_gradient"
             android:padding="1dp"
-            android:src="@drawable/knight_prot" />
+            android:src="@drawable/paladin" />
 
         <ImageView
             android:id="@+id/imgWizard"

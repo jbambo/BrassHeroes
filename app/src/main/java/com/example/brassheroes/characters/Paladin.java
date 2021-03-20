@@ -2,9 +2,8 @@ package com.example.brassheroes.characters;
 
 public class Paladin extends GameEntity {
 
-
-    public Paladin(String profession) {
-        super(profession);
+    public Paladin() {
+        setProfession("paladin");
         setMaxHealth(125);
         setHealthInc(25);
         setArmor(15);

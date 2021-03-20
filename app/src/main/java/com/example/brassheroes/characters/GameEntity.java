@@ -1,14 +1,6 @@
 package com.example.brassheroes.characters;
 
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import androidx.annotation.NonNull;
 
 public class GameEntity {
 
@@ -33,7 +25,6 @@ public class GameEntity {
                       String damageType,
                       int baseDamage,
                       int damageInc,
-                      int currentDamage,
                       int armor,
                       int armorInc,
                       int health,
@@ -48,7 +39,7 @@ public class GameEntity {
         this.damageType = damageType;
         this.baseDamage = baseDamage;
         this.damageInc = damageInc;
-        this.currentDamage = currentDamage;
+        this.currentDamage = getBaseDamage();
         this.armor = armor;
         this.armorInc = armorInc;
         this.health = health;
@@ -59,8 +50,7 @@ public class GameEntity {
         this.expNeeded = expNeeded;
     }
 
-    public GameEntity(String profession) {
-        this.profession = profession;
+    public GameEntity() {
         this.currentDamage = getBaseDamage();
     }
 
@@ -197,6 +187,14 @@ public class GameEntity {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return  "Name:\t" + getName()+
+                "\nProfession:\t" + getProfession()+
+                "\nDamage Type:\t" + getDamageType()+
+                "\nDamage:\t" + getCurrentDamage() +
+                "\nArmor:\t" + getArmor() +
+                "\nHealth:\t" + getMaxHealth() +
+                "\nLevel:\t" + getLevel();
+    }
 }

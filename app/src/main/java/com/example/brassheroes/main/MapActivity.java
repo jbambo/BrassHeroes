@@ -1,5 +1,6 @@
 package com.example.brassheroes.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +17,7 @@ import java.io.File;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private int mapProgress;
-
     GameEntity player;
-
-    String username;
 
     private Button btnInventory, btnFight;
 
@@ -32,21 +29,19 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_map);
         int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
-        getData();
         initControls();
+        getData();
+
 
     }
 
     //function to extract saved data
     private void getData() {
-
-        //get the first files name
         File[] files = getFilesDir().listFiles();
-        //select this file
+        //select the file
         File file = new File(getFilesDir(), files[0].getName());
         try {
             player = Persistence.getData(player, file);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,6 +69,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

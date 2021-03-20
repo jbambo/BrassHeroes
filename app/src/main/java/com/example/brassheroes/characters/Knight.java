@@ -2,8 +2,8 @@ package com.example.brassheroes.characters;
 
 public class Knight extends GameEntity {
 
-    public Knight(String profession) {
-        super(profession);
+    public Knight() {
+        setProfession("knight");
         setDamageInc(14);
         setArmor(10);
         setArmorInc(7);

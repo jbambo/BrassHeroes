@@ -31,7 +31,7 @@ public class Persistence {
 
 //            //get the first files name
 //            File[] files = getFilesDir().listFiles();
-//            //select this file
+//            //select the first and only file
 //            File file = new File(getFilesDir(), files[0].getName());
         //start file and buffered reader
         try {
@@ -51,7 +51,6 @@ public class Persistence {
                     jsonObject.get("damageType").toString(),
                     Integer.parseInt(jsonObject.get("baseDamage").toString()),
                     Integer.parseInt(jsonObject.get("damageInc").toString()),
-                    Integer.parseInt(jsonObject.get("currentDamage").toString()),
                     Integer.parseInt(jsonObject.get("armor").toString()),
                     Integer.parseInt(jsonObject.get("armorInc").toString()),
                     Integer.parseInt(jsonObject.get("health").toString()),

@@ -10,7 +10,7 @@ public class GameEntity {
     private int currentDamage;
     private int armor = 8;
     private int armorInc = 5;
-    private int health=100;
+    private int health = 100;
     private int maxHealth = 100;
     private int healthInc = 20;
     private int level = 1;
@@ -18,7 +18,7 @@ public class GameEntity {
     private int expNeeded = 100;
 
 
-    public GameEntity(String name, String profession, String damageType, int baseDamage, int damageInc,int currentDamage, int armor, int armorInc, int health, int maxHealth, int healthInc, int level, int exp, int expNeeded) {
+    public GameEntity(String name, String profession, String damageType, int baseDamage, int damageInc, int currentDamage, int armor, int armorInc, int health, int maxHealth, int healthInc, int level, int exp, int expNeeded) {
         this.name = name;
         this.profession = profession;
         this.damageType = damageType;
@@ -96,7 +96,6 @@ public class GameEntity {
         this.baseDamage = baseDamage;
     }
 
-
     public int getArmor() {
         return armor;
     }
@@ -130,8 +129,7 @@ public class GameEntity {
     }
 
     // stats on level up
-    public void levelUp() {
-        if (exp == expNeeded) {
+    public void levelUp(int overflow) {
             //set damage
             setCurrentDamage(getBaseDamage() + getDamageInc());
             // set exp needed for next level
@@ -144,7 +142,22 @@ public class GameEntity {
             setHealthInc(getHealthInc() + 10);
             //increase armor
             setArmor(getArmor() + getArmorInc());
-            setExp(0);
+            //set exp to oveflow
+            setExp(overflow);
+
+    }
+    //gain experience
+    public void gainExp(int expAmt){
+        //if level up not possible add exp
+        if (getExp()<getExpNeeded()){
+            //add exp
+            setExp(getExp()+expAmt);
+            //check now if level up possible
+            if (getExpNeeded()<=getExp()){
+                levelUp(getExp()-getExpNeeded());
+            }
+        }else if (getExpNeeded()<=getExp()){
+            levelUp(getExp()-getExpNeeded());
         }
     }
 
@@ -172,6 +185,9 @@ public class GameEntity {
         this.damageType = damageType;
     }
 
+    public void recieveDamage(int damage){
+        setHealth(getHealth()-(damage-getArmor()));
+    }
 
     @Override
     public String toString() {

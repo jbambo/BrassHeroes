@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.Enemy;
 import com.example.brassheroes.characters.GameEntity;
+import com.example.brassheroes.fightmechanics.RNG;
 
 import java.io.File;
 
@@ -25,9 +27,11 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     GameEntity player;
 
-    TextView playerMessage;
+    TextView playerMessage, enemyName;
 
     ProgressBar enemyHealth, playerHealth;
+
+    ImageView enemyPortrait;
 
 
     @Override
@@ -40,18 +44,39 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void stateWatcher() {
-        if (enemyHealth.getProgress() == 0) {
+        if (enemy.getHealth() <= 0) {
+
+            player.gainExp(100);
+
+            File file = new File(getFilesDir(), "Saved-" + player.getName());
+            Persistence.saveData(player, file);
+
+            Toast.makeText(this, "you won!", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(this, StoryActivity.class);
+            intent.putExtra("won", true);
+            startActivity(intent);
+        }
+        if (player.getHealth() <= 0) {
+            Toast.makeText(this, "you lost!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, StoryActivity.class);
+            intent.putExtra("won", false);
             startActivity(intent);
         }
     }
 
     private void attackMove() {
-        //Toast.makeText(this, "Damage over 9000!", Toast.LENGTH_SHORT).show();
-        int damage = player.getCurrentDamage()-enemy.getArmor();
-        enemy.setHealth(enemy.getHealth()-damage);
-        enemyHealth.setProgress(enemy.getHealth());
+
+        enemy.recieveDamage(player.getCurrentDamage());
+        enemyHealth.setProgress(enemy.getHealth(), true);
+
         stateWatcher();
+
+        player.recieveDamage(enemy.getCurrentDamage());
+        playerHealth.setProgress(player.getHealth(), true);
+
+        stateWatcher();
+
     }
 
 
@@ -77,7 +102,13 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         playerHealth.setProgress(player.getMaxHealth());
 
         playerMessage = findViewById(R.id.playerMessage);
-        playerMessage.setText("Make your move, "+player.getName()+" !");
+        playerMessage.setText("Make your move, " + player.getName() + " !");
+
+        enemyPortrait = findViewById(R.id.enemyPortrait);
+        enemyPortrait.setImageResource(RNG.randomEnemyPortrait());
+
+        enemyName = findViewById(R.id.enemyName);
+        enemyName.setText(enemy.getName());
 
     }
 

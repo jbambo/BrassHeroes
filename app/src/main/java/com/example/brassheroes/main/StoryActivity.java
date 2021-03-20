@@ -14,9 +14,9 @@ public class StoryActivity extends AppCompatActivity {
 
     TextView storyText, storyTitle;
 
-    Button skipStory;
+    boolean isFightWon;
 
-    String[] stories;
+    Button skipStory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +33,22 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     private String loopString() {
-        String temp = " wow, good storyline! ";
-        for (int i = 0; i < 10; i++) {
+        String temp="";
+        if (isFightWon){
+            temp = " you won!\n";
+        }
+        if (!isFightWon) {
+            temp = " not this time man\n";
+        }
+
+        for (int i = 0; i < 5; i++) {
             temp += temp;
         }
         return temp;
     }
 
     private void initControls() {
+        isFightWon= getIntent().getBooleanExtra("won",true);
 
         storyText = findViewById(R.id.storyText);
         storyTitle = findViewById(R.id.storyTitle);

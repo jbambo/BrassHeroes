@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/enemyLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:text="Enemy name"
             android:textAlignment="center"
-            android:textSize="12pt" />
+            android:textSize="12pt"
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/enemyPortrait"
@@ -27,8 +28,8 @@
             android:layout_height="300dp"
             android:layout_below="@+id/enemyName"
             android:background="@drawable/background_border"
-            android:padding="1dp"
-            android:src="@drawable/enemy_wizard" />
+            android:layout_centerHorizontal="true"
+            android:padding="1dp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -69,7 +70,7 @@
         android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enemyLayout">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/playerMessage"

@@ -40,13 +40,23 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_fight);
         int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
+        initPlayers();
         initControls();
     }
 
-    private void stateWatcher() {
+    private void attackMove() {
+        //System.out.println(enemy.getLevel()+"- lv, damage: "+enemy.getCurrentDamage());
+
+        //System.out.println("enemy hp before: " + enemy.getHealth());
+        enemy.receiveDamage(player.getCurrentDamage());
+        enemyHealth.setProgress(enemy.getHealth(), true);
+        //System.out.println("enemy hp after: " + enemy.getHealth());
+
+
         if (enemy.getHealth() <= 0) {
 
             player.gainExp(100);
+            player.setHealth(player.getMaxHealth());
 
             File file = new File(getFilesDir(), "Saved-" + player.getName());
             Persistence.saveData(player, file);
@@ -57,36 +67,39 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("won", true);
             startActivity(intent);
         }
+
+        //System.out.println("player hp before: " + player.getHealth());
+
+        player.receiveDamage(enemy.getCurrentDamage());
+        playerHealth.setProgress(player.getHealth(), true);
+
+        //System.out.println("player hp after: " + player.getHealth());
+
         if (player.getHealth() <= 0) {
             Toast.makeText(this, "you lost!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StoryActivity.class);
             intent.putExtra("won", false);
             startActivity(intent);
         }
-    }
 
-    private void attackMove() {
-
-        enemy.recieveDamage(player.getCurrentDamage());
-        enemyHealth.setProgress(enemy.getHealth(), true);
-
-        stateWatcher();
-
-        player.recieveDamage(enemy.getCurrentDamage());
-        playerHealth.setProgress(player.getHealth(), true);
-
-        stateWatcher();
 
     }
 
-
-    private void initControls() {
+    private void initPlayers() {
         enemy = new Enemy();
 
         File[] files = getFilesDir().listFiles();
 
         File file = new File(getFilesDir(), files[0].getName());
         player = Persistence.getData(player, file);
+
+        while (player.getLevel() > enemy.getLevel()) {
+            enemy.gainExp(enemy.getExpNeeded());
+        }
+
+    }
+
+    private void initControls() {
 
         btnAttack = findViewById(R.id.attackBtn);
         btnFlee = findViewById(R.id.runBtn);

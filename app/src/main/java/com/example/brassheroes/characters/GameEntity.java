@@ -128,36 +128,35 @@ public class GameEntity {
         this.maxHealth = maxHealth;
     }
 
-    // stats on level up
-    public void levelUp(int overflow) {
-            //set damage
-            setCurrentDamage(getBaseDamage() + getDamageInc());
-            // set exp needed for next level
-            setExpNeeded(getExpNeeded() + 20);
-            //increase level by 1
-            setLevel(getLevel() + 1);
-            //set health
-            setMaxHealth(getMaxHealth() + getHealthInc());
-            //change health/level increase
-            setHealthInc(getHealthInc() + 10);
-            //increase armor
-            setArmor(getArmor() + getArmorInc());
-            //set exp to oveflow
-            setExp(overflow);
+    public void levelUp() {
+        //set damage
+        setCurrentDamage(getCurrentDamage() + getDamageInc());
+        // set exp needed for next level
+        setExpNeeded(getExpNeeded() + 20);
+        //increase level by 1
+        setLevel(getLevel() + 1);
+        //set health
+        setMaxHealth(getMaxHealth() + getHealthInc());
+        //change health/level increase
+        setHealthInc(getHealthInc() + 10);
+        //increase armor
+        setArmor(getArmor() + getArmorInc());
+
 
     }
+
     //gain experience
-    public void gainExp(int expAmt){
-        //if level up not possible add exp
-        if (getExp()<getExpNeeded()){
-            //add exp
-            setExp(getExp()+expAmt);
+    public void gainExp(int expAmt) {
+        if (getExpNeeded() <= getExp()) {
+            levelUp();
+            setExp(0);
+        } else {
+            setExp(getExp() + expAmt);
             //check now if level up possible
-            if (getExpNeeded()<=getExp()){
-                levelUp(getExp()-getExpNeeded());
+            if (getExpNeeded() <= getExp()) {
+                levelUp();
+                setExp(0);
             }
-        }else if (getExpNeeded()<=getExp()){
-            levelUp(getExp()-getExpNeeded());
         }
     }
 
@@ -185,8 +184,11 @@ public class GameEntity {
         this.damageType = damageType;
     }
 
-    public void recieveDamage(int damage){
-        setHealth(getHealth()-(damage-getArmor()));
+    public void receiveDamage(int damage) {
+        if ((damage-getArmor()<=5)){
+            setHealth((int) (getHealth()-(damage*0.4)));
+        }else
+        setHealth((getHealth() - (damage - getArmor())));
     }
 
     @Override

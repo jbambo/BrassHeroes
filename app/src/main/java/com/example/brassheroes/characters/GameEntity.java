@@ -1,7 +1,5 @@
 package com.example.brassheroes.characters;
 
-import androidx.annotation.NonNull;
-
 public class GameEntity {
 
     private String name;
@@ -12,7 +10,7 @@ public class GameEntity {
     private int currentDamage;
     private int armor = 8;
     private int armorInc = 5;
-    private int health;
+    private int health=100;
     private int maxHealth = 100;
     private int healthInc = 20;
     private int level = 1;
@@ -20,26 +18,13 @@ public class GameEntity {
     private int expNeeded = 100;
 
 
-    public GameEntity(String name,
-                      String profession,
-                      String damageType,
-                      int baseDamage,
-                      int damageInc,
-                      int armor,
-                      int armorInc,
-                      int health,
-                      int maxHealth,
-                      int healthInc,
-                      int level,
-                      int exp,
-                      int expNeeded) {
-
+    public GameEntity(String name, String profession, String damageType, int baseDamage, int damageInc,int currentDamage, int armor, int armorInc, int health, int maxHealth, int healthInc, int level, int exp, int expNeeded) {
         this.name = name;
         this.profession = profession;
         this.damageType = damageType;
         this.baseDamage = baseDamage;
         this.damageInc = damageInc;
-        this.currentDamage = getBaseDamage();
+        this.currentDamage = currentDamage;
         this.armor = armor;
         this.armorInc = armorInc;
         this.health = health;
@@ -49,6 +34,7 @@ public class GameEntity {
         this.exp = exp;
         this.expNeeded = expNeeded;
     }
+
 
     public GameEntity() {
         this.currentDamage = getBaseDamage();
@@ -189,9 +175,9 @@ public class GameEntity {
 
     @Override
     public String toString() {
-        return  "Name:\t" + getName()+
-                "\nProfession:\t" + getProfession()+
-                "\nDamage Type:\t" + getDamageType()+
+        return "Name:\t" + getName() +
+                "\nProfession:\t" + getProfession() +
+                "\nDamage Type:\t" + getDamageType() +
                 "\nDamage:\t" + getCurrentDamage() +
                 "\nArmor:\t" + getArmor() +
                 "\nHealth:\t" + getMaxHealth() +

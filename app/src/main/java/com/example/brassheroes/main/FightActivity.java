@@ -5,19 +5,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
+import com.example.brassheroes.characters.Enemy;
+import com.example.brassheroes.characters.GameEntity;
+
+import java.io.File;
 
 public class FightActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnAttack, btnFlee;
 
-    int enemyHP = 100;
+    Enemy enemy;
 
-    ProgressBar enemyHealth;
+    GameEntity player;
+
+    TextView playerMessage;
+
+    ProgressBar enemyHealth, playerHealth;
 
 
     @Override
@@ -37,20 +47,38 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void attackMove() {
-        Toast.makeText(this, "Damage over 9000!", Toast.LENGTH_SHORT).show();
-        enemyHP = enemyHP - 25;
-        enemyHealth.setProgress(enemyHP);
+        //Toast.makeText(this, "Damage over 9000!", Toast.LENGTH_SHORT).show();
+        int damage = player.getCurrentDamage()-enemy.getArmor();
+        enemy.setHealth(enemy.getHealth()-damage);
+        enemyHealth.setProgress(enemy.getHealth());
         stateWatcher();
     }
 
+
     private void initControls() {
+        enemy = new Enemy();
+
+        File[] files = getFilesDir().listFiles();
+
+        File file = new File(getFilesDir(), files[0].getName());
+        player = Persistence.getData(player, file);
+
         btnAttack = findViewById(R.id.attackBtn);
         btnFlee = findViewById(R.id.runBtn);
-
-        enemyHealth = findViewById(R.id.enemyHealth);
-
         btnFlee.setOnClickListener(this);
         btnAttack.setOnClickListener(this);
+
+        enemyHealth = findViewById(R.id.enemyHealth);
+        enemyHealth.setMax(enemy.getMaxHealth());
+        enemyHealth.setProgress(enemy.getMaxHealth());
+
+        playerHealth = findViewById(R.id.playerHealth);
+        playerHealth.setMax(player.getMaxHealth());
+        playerHealth.setProgress(player.getMaxHealth());
+
+        playerMessage = findViewById(R.id.playerMessage);
+        playerMessage.setText("Make your move, "+player.getName()+" !");
+
     }
 
     private void run() {

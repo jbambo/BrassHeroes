@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/textEnemy"
-            android:max="100"
-            android:progress="100"
             android:progressTint="@color/darkRed"
+            android:progressBackgroundTint="#FF0000"
+            android:progress="0"
             android:scaleY="2" />
 
         <TextView
@@ -97,9 +97,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/textPlayer"
-                android:max="100"
-                android:progress="100"
+                android:progressBackgroundTint="#FF0000"
                 android:progressTint="@color/darkRed"
+                android:progress="0"
                 android:scaleY="2" />
 
             <TextView

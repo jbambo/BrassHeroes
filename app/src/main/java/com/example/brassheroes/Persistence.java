@@ -51,6 +51,7 @@ public class Persistence {
                     jsonObject.get("damageType").toString(),
                     Integer.parseInt(jsonObject.get("baseDamage").toString()),
                     Integer.parseInt(jsonObject.get("damageInc").toString()),
+                    Integer.parseInt(jsonObject.get("currentDamage").toString()),
                     Integer.parseInt(jsonObject.get("armor").toString()),
                     Integer.parseInt(jsonObject.get("armorInc").toString()),
                     Integer.parseInt(jsonObject.get("health").toString()),

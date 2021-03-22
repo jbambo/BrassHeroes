@@ -180,25 +180,71 @@ public class GameEntity {
         return damageType;
     }
 
+    private int damageCalculation(int enemyDamage) {
+        if ((enemyDamage - getArmor() <= 5)) {
+            return (int) (getHealth() - (enemyDamage * 0.4));
+        } else
+            return (getHealth() - (enemyDamage - getArmor()));
+    }
+
+    private int damageCalculationSEffective(int enemyDamage) {
+        double superEffective = 1.5;
+        if ((enemyDamage - getArmor() <= 5)) {
+            return (int) ((getHealth() - (enemyDamage * 0.4)) * superEffective);
+        } else
+            return (int) ((getHealth() - (enemyDamage - getArmor())) * superEffective);
+    }
+
     public void setDamageType(String damageType) {
         this.damageType = damageType;
     }
 
-    public void receiveDamage(int damage) {
-        if ((damage-getArmor()<=5)){
-            setHealth((int) (getHealth()-(damage*0.4)));
-        }else
-        setHealth((getHealth() - (damage - getArmor())));
+    public void receiveDamage(int enemyDamage, String enemyType) {
+
+        setHealth(damageCalculation(enemyDamage));
+
+//        //physical recieves damage
+//        switch (enemyType) {
+//            case "physical":
+//                if (getDamageType().equals("magic")) {
+//                    setHealth(damageCalculationSEffective(enemyDamage));
+//                } else setHealth(damageCalculation(enemyDamage));
+//
+//                break;
+//
+//            //mental recieves damage
+//            case "mental":
+//                if (enemyType.equals("physical")) {
+//                    setHealth(damageCalculationSEffective(enemyDamage));
+//
+//                } else setHealth(damageCalculation(enemyDamage));
+//
+//                break;
+//
+//            //magic recieves damage
+//            case "magic":
+//                if (enemyType.equals("mental")) {
+//                    setHealth(damageCalculationSEffective(enemyDamage));
+//
+//                } else setHealth(damageCalculation(enemyDamage));
+//
+//                break;
+//
+//            default:
+//                setHealth(damageCalculation(enemyDamage));
+//                break;
+//        }
+
     }
 
     @Override
     public String toString() {
-        return "Name:\t" + getName() +
-                "\nProfession:\t" + getProfession() +
-                "\nDamage Type:\t" + getDamageType() +
-                "\nDamage:\t" + getCurrentDamage() +
-                "\nArmor:\t" + getArmor() +
-                "\nHealth:\t" + getMaxHealth() +
-                "\nLevel:\t" + getLevel();
+        return "Name: " + getName() +
+                "\nProfession: " + getProfession() +
+                "\nDamage Type: " + getDamageType() +
+                "\nDamage: " + getCurrentDamage() +
+                "\nArmor: " + getArmor() +
+                "\nHealth: " + getMaxHealth() +
+                "\nLevel: " + getLevel();
     }
 }

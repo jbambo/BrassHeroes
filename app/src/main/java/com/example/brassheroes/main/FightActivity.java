@@ -15,7 +15,7 @@ import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.Enemy;
 import com.example.brassheroes.characters.GameEntity;
-import com.example.brassheroes.fightmechanics.RNG;
+import com.example.brassheroes.gamemechanics.RNG;
 
 import java.io.File;
 
@@ -27,7 +27,7 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     GameEntity player;
 
-    TextView playerMessage, enemyName;
+    TextView playerMessage, enemyName, enemyClass;
 
     ProgressBar enemyHealth, playerHealth;
 
@@ -47,18 +47,19 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     private void attackMove() {
         //System.out.println(enemy.getLevel()+"- lv, damage: "+enemy.getCurrentDamage());
 
-        //System.out.println("enemy hp before: " + enemy.getHealth());
-        enemy.receiveDamage(player.getCurrentDamage());
+        System.out.println("enemy hp before: " + enemy.getHealth());
+        enemy.receiveDamage(player.getCurrentDamage(),player.getDamageType());
         enemyHealth.setProgress(enemy.getHealth(), true);
-        //System.out.println("enemy hp after: " + enemy.getHealth());
+        System.out.println("enemy hp after: " + enemy.getHealth());
 
-
+        //check win condition
         if (enemy.getHealth() <= 0) {
 
-            player.gainExp(100);
+            player.gainExp(60);
             player.setHealth(player.getMaxHealth());
 
             File file = new File(getFilesDir(), "Saved-" + player.getName());
+
             Persistence.saveData(player, file);
 
             Toast.makeText(this, "you won!", Toast.LENGTH_SHORT).show();
@@ -68,13 +69,14 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
 
-        //System.out.println("player hp before: " + player.getHealth());
+        System.out.println("player hp before: " + player.getHealth());
 
-        player.receiveDamage(enemy.getCurrentDamage());
+        player.receiveDamage(enemy.getCurrentDamage(), enemy.getDamageType());
         playerHealth.setProgress(player.getHealth(), true);
 
-        //System.out.println("player hp after: " + player.getHealth());
+        System.out.println("player hp after: " + player.getHealth());
 
+        //win condition
         if (player.getHealth() <= 0) {
             Toast.makeText(this, "you lost!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StoryActivity.class);
@@ -123,6 +125,8 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         enemyName = findViewById(R.id.enemyName);
         enemyName.setText(enemy.getName());
 
+        enemyClass = findViewById(R.id.enemyClass);
+        enemyClass.setText("the fallen "+enemy.getProfession());
     }
 
     private void run() {

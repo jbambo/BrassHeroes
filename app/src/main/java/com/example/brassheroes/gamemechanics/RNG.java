@@ -1,4 +1,4 @@
-package com.example.brassheroes.fightmechanics;
+package com.example.brassheroes.gamemechanics;
 
 import java.util.Random;
 
@@ -10,18 +10,20 @@ import static com.example.brassheroes.R.drawable.enemy5;
 
 
 public class RNG {
+    private static final String[] damageTypes = {
+            "magic",
+            "mental",
+            "physical"
+    };
+
     private static final String[] firstNames = {
-            "Connor",
             "Leo",
             "Fyodor",
-            "Christopher",
             "Friedrich",
             "Arthur",
             "Wolfgang"};
     private static final String[] lastNames = {
-            "McGregor",
             "Tolstoy",
-            "Nolan",
             "Dostoyevsky",
             "Nietzsche",
             "Schopenhauer",
@@ -41,6 +43,10 @@ public class RNG {
 
     public static int randomEnemyPortrait() {
         return enemyPictures[randomNumber(enemyPictures.length, 0)];
+    }
+
+    public static String randomDamageType() {
+        return damageTypes[randomNumber(damageTypes.length, 0)];
     }
 
 }

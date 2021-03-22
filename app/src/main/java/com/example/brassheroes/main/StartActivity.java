@@ -78,8 +78,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             player.setName(username);
             File file = new File(this.getFilesDir(), "Saved-" + username);
             Persistence.saveData(player, file);
+
             Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("username", player.getName());
             startActivity(intent);
         }
     }

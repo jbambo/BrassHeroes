@@ -1,11 +1,21 @@
 package com.example.brassheroes.characters;
 
-import com.example.brassheroes.fightmechanics.RNG;
+import com.example.brassheroes.gamemechanics.RNG;
 
 public class Enemy extends GameEntity {
     public Enemy() {
+        setDamageType(RNG.randomDamageType());
         setName(RNG.randomName());
         setArmor(4);
         setBaseDamage(10);
+        if (getDamageType().equals("mental")){
+            setProfession("Paladin");
+        }
+        if (getDamageType().equals("magic")){
+            setProfession("Wizard");
+        }
+        if (getDamageType().equals("physical")){
+            setProfession("Knight");
+        }
     }
 }

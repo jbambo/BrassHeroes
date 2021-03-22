@@ -14,6 +14,7 @@ import java.io.FileWriter;
 public class Persistence {
 
     public static void saveData(GameEntity player, File file) {
+
         Gson gson = new Gson();
         String saveJson = gson.toJson(player);
         try {

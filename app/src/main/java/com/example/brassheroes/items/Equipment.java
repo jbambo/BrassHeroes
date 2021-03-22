@@ -61,10 +61,10 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return "Weapon name: " + name +
-                ", Damage: " + damageStat +
-                ", Health: " + healthStat +
-                ",\nArmor: " + armorStat +
-                ", Required level: " + levelRequirement;
+        return "" + name +
+                "\nDamage: " + damageStat +
+                " Health: " + healthStat +
+                "\nArmor: " + armorStat +
+                " Req. level: " + levelRequirement;
     }
 }

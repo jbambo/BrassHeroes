@@ -1,5 +1,8 @@
 package com.example.brassheroes.characters;
 
+import android.graphics.drawable.Drawable;
+
+import com.example.brassheroes.R;
 import com.example.brassheroes.items.Equipment;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class GameEntity {
     private int level = 1;
     private int exp = 0;
     private int expNeeded = 100;
+    private int portrait;
     private ArrayList<Equipment> playersEquipment;
 
     public GameEntity(
@@ -58,6 +62,7 @@ public class GameEntity {
     public GameEntity() {
         this.currentDamage = getBaseDamage();
     }
+
     public String getProfession() {
         return profession;
     }
@@ -220,7 +225,6 @@ public class GameEntity {
     public void receiveDamage(int enemyDamage, String enemyType) {
 
         setHealth(damageCalculation(enemyDamage));
-
 //        //physical recieves damage
 //        switch (enemyType) {
 //            case "physical":
@@ -247,12 +251,10 @@ public class GameEntity {
 //                } else setHealth(damageCalculation(enemyDamage));
 //
 //                break;
-//
 //            default:
 //                setHealth(damageCalculation(enemyDamage));
 //                break;
 //        }
-
     }
 
     @Override
@@ -272,5 +274,25 @@ public class GameEntity {
 
     public void setPlayersEquipment(ArrayList<Equipment> playersEquipment) {
         this.playersEquipment = playersEquipment;
+    }
+
+    public void equipItems() {
+        int totalHp = 0, totalDmg = 0, totalArmor = 0;
+        for (Equipment e : getPlayersEquipment()) {
+            totalHp = totalHp + e.getHealthStat();
+            totalDmg = totalDmg + e.getHealthStat();
+            totalArmor = totalArmor + e.getHealthStat();
+        }
+        setMaxHealth(totalHp);
+        setArmor(totalArmor);
+        setCurrentDamage(totalDmg);
+    }
+
+    public int getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(int portrait) {
+        this.portrait = portrait;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.brassheroes.characters;
 
+import com.example.brassheroes.R;
+
 public class Wizard extends GameEntity {
 
     public Wizard() {
@@ -8,5 +10,6 @@ public class Wizard extends GameEntity {
         setDamageInc(20);
         setHealthInc(15);
         setDamageType("magic");
+        setPortrait(R.drawable.wizard);
     }
 }

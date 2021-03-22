@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,15 +21,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class PlayerActivity extends AppCompatActivity {
-    TextView playerInfo;
+    private TextView playerInfo;
 
-    ListView listView;
+    private ListView listView;
 
-    GameEntity player;
+    private GameEntity player;
 
-    ArrayList<Equipment> inventory;
+    private ArrayList<Equipment> inventory;
 
     private Button btnGoBack;
+
+    private ImageView playerPortrait;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,8 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void initControls() {
+        playerPortrait = findViewById(R.id.playerPortrait);
+
         playerInfo = findViewById(R.id.playerStats);
         btnGoBack = findViewById(R.id.btnGoBack);
 
@@ -66,11 +73,12 @@ public class PlayerActivity extends AppCompatActivity {
         File[] files2 = inventoryDir.listFiles();
         File file2 = new File(inventoryDir, files2[0].getName());
         inventory = Persistence.getData(inventory, file2);
-        System.out.println("file succesful: " + inventory.toString());
-
 
         ArrayAdapter<Equipment> adapter = new ArrayAdapter<>(this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
         listView.setAdapter(adapter);
+
+        playerPortrait.setImageResource(player.getPortrait());
+
     }
 
 
@@ -78,7 +86,6 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
-
 
 }
 

@@ -76,7 +76,7 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
         System.out.println("player hp after: " + player.getHealth());
 
-        //win condition
+
         if (player.getHealth() <= 0) {
             Toast.makeText(this, "you lost!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StoryActivity.class);

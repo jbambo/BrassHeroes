@@ -17,12 +17,16 @@ public class RNG {
     };
 
     private static final String[] firstNames = {
+            "Erwin",
+            "Niccolo",
             "Leo",
             "Fyodor",
             "Friedrich",
             "Arthur",
             "Wolfgang"};
     private static final String[] lastNames = {
+            "Schroedinger",
+            "Machiavelli",
             "Tolstoy",
             "Dostoyevsky",
             "Nietzsche",

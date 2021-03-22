@@ -14,9 +14,9 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.accordionv2);
+        player = MediaPlayer.create(this, R.raw.theme);
         player.setLooping(true); // Set looping
-        player.setVolume(20,20);
+        player.setVolume(30,30);
 
     }
     public int onStartCommand(Intent intent, int flags, int startId) {

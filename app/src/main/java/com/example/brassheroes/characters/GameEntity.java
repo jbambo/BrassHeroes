@@ -1,5 +1,9 @@
 package com.example.brassheroes.characters;
 
+import com.example.brassheroes.items.Equipment;
+
+import java.util.ArrayList;
+
 public class GameEntity {
 
     private String name;
@@ -16,9 +20,24 @@ public class GameEntity {
     private int level = 1;
     private int exp = 0;
     private int expNeeded = 100;
+    private ArrayList<Equipment> playersEquipment;
 
+    public GameEntity(
+            String name,
+            String profession,
+            String damageType,
+            int baseDamage,
+            int damageInc,
+            int currentDamage,
+            int armor,
+            int armorInc,
+            int health,
+            int maxHealth,
+            int healthInc,
+            int level,
+            int exp,
+            int expNeeded) {
 
-    public GameEntity(String name, String profession, String damageType, int baseDamage, int damageInc, int currentDamage, int armor, int armorInc, int health, int maxHealth, int healthInc, int level, int exp, int expNeeded) {
         this.name = name;
         this.profession = profession;
         this.damageType = damageType;
@@ -39,7 +58,6 @@ public class GameEntity {
     public GameEntity() {
         this.currentDamage = getBaseDamage();
     }
-
     public String getProfession() {
         return profession;
     }
@@ -246,5 +264,13 @@ public class GameEntity {
                 "\nArmor: " + getArmor() +
                 "\nHealth: " + getMaxHealth() +
                 "\nLevel: " + getLevel();
+    }
+
+    public ArrayList<Equipment> getPlayersEquipment() {
+        return playersEquipment;
+    }
+
+    public void setPlayersEquipment(ArrayList<Equipment> playersEquipment) {
+        this.playersEquipment = playersEquipment;
     }
 }

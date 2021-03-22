@@ -33,7 +33,6 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     ImageView enemyPortrait;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,9 +89,11 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     private void initPlayers() {
         enemy = new Enemy();
 
-        File[] files = getFilesDir().listFiles();
+        File gamesDir = new File(getFilesDir(), "savedGames");
 
-        File file = new File(getFilesDir(), files[0].getName());
+        File[] files = gamesDir.listFiles();
+
+        File file = new File(gamesDir, files[0].getName());
         player = Persistence.getData(player, file);
 
         while (player.getLevel() > enemy.getLevel()) {

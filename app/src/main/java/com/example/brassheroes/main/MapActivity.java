@@ -39,10 +39,14 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
     //function to extract saved data
     private void getData() {
-        File[] files = getFilesDir().listFiles();
+        //file object with saved games dir
+        File gamesDir = new File(getFilesDir(), "savedGames");
+        //list of files on saved games dir
+        File[] files = gamesDir.listFiles();
         //select the file
-        File file = new File(getFilesDir(), files[0].getName());
+        File file = new File(gamesDir, files[0].getName());
         try {
+            //call the function
             player = Persistence.getData(player, file);
         } catch (Exception e) {
             e.printStackTrace();

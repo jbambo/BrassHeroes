@@ -16,8 +16,10 @@ import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.characters.Knight;
 import com.example.brassheroes.characters.Paladin;
 import com.example.brassheroes.characters.Wizard;
+import com.example.brassheroes.items.Equipment;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +33,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private GameEntity player;
 
+    private ArrayList<Equipment> inventory;
+
     private String username;
+
+    private File gamesDir, inventoryDir;
 
     private boolean classPicked = false;
 
@@ -61,6 +67,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         imgClass2.setOnClickListener(this);
         imgClass3.setOnClickListener(this);
         btnStartGame.setOnClickListener(this);
+
+        gamesDir = new File(getFilesDir(), "savedGames");
+        inventoryDir = new File(getFilesDir(), "savedInventory");
+        inventory = new ArrayList<>();
+        inventory.add(new Equipment());
+        inventory.add(new Equipment());
+        inventory.add(new Equipment());
+
+
     }
 
     public boolean check() {
@@ -74,13 +89,25 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     public void newGame() {
         boolean correctInput = check();
-        if (correctInput && classPicked) {
-            player.setName(username);
-            File file = new File(this.getFilesDir(), "Saved-" + username);
-            Persistence.saveData(player, file);
 
-            Intent intent = new Intent(this, MapActivity.class);
-            startActivity(intent);
+        if (correctInput && classPicked) {
+
+            player.setName(username);
+
+            if (gamesDir.isDirectory() && inventoryDir.isDirectory()) {
+                //create inital save file
+                File playerSave = new File(gamesDir, "Saved-" + username);
+                Persistence.saveData(player, playerSave);
+                //create initial inventory save file
+                File inventorySave = new File(inventoryDir, "Inventory-" + username);
+                Persistence.saveData(inventory, inventorySave);
+
+
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
+
+            }
+
         }
     }
 
@@ -135,7 +162,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 newGame();
         }
     }
-
 
     public void selectView(View v) {
         v.setBackgroundResource(R.drawable.gold_selected);

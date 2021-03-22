@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button contGameBtn, newGameBtn;
 
+    File gamesDir, inventoryDir;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initControls() {
+        gamesDir = new File(getFilesDir(), "savedGames");
+        inventoryDir = new File(getFilesDir(), "savedInventory");
+
         contGameBtn = findViewById(R.id.continueBtn);
         newGameBtn = findViewById(R.id.newGameBtn);
 
@@ -45,23 +50,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void continueGame() {
-        if (this.getFilesDir().list().length != 0) {
-            Intent intent = new Intent(MainActivity.this, MapActivity.class);
-            startActivity(intent);
-        } else Toast.makeText(MainActivity.this, "no saved game", Toast.LENGTH_LONG).show();
+        if (gamesDir.isDirectory()&&inventoryDir.isDirectory()){
+            if (gamesDir.listFiles().length != 0) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+            } else Toast.makeText(MainActivity.this, "no saved game", Toast.LENGTH_LONG).show();
+        }else Toast.makeText(MainActivity.this, "never started a game", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.newGameBtn:
-                if (this.getFilesDir().list().length != 0) {
-                    for (File tempFile : getFilesDir().listFiles()) {
-                        tempFile.delete();
+                if (gamesDir.isDirectory()&&inventoryDir.isDirectory()) {
+                    if (gamesDir.listFiles().length != 0) {
+                        for (File tempFile : gamesDir.listFiles()) {
+                            tempFile.delete();
+                        }
+                        for (File tempFile : inventoryDir.listFiles()) {
+                            tempFile.delete();
+                        }
                     }
+                } else {
+                    System.out.println("no dir found, creating");
+                    gamesDir.mkdir();
+                    inventoryDir.mkdir();
                 }
                 startGame();
                 break;
+
             case R.id.continueBtn:
                 continueGame();
                 break;

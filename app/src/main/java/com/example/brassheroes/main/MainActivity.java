@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.BackgroundSoundService;
+import com.example.brassheroes.gamemechanics.BackgroundSoundService;
 import com.example.brassheroes.R;
 
 import java.io.File;

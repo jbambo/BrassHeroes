@@ -7,6 +7,7 @@ public class Equipment {
     private int healthStat;
     private int armorStat;
     private int levelRequirement;
+    private int icon;
     //later rarity and unique modifiers
 
     public Equipment(String name, int damageStat, int healthStat, int armorStat, int levelRequirement) {
@@ -58,6 +59,14 @@ public class Equipment {
 
     public void setLevelRequirement(int levelRequirement) {
         this.levelRequirement = levelRequirement;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 
     @Override

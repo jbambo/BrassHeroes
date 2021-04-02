@@ -1,9 +1,11 @@
-package com.example.brassheroes;
+package com.example.brassheroes.gamemechanics;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+
+import com.example.brassheroes.R;
 
 public class BackgroundSoundService extends Service {
     private static final String TAG = null;

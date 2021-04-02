@@ -6,11 +6,25 @@ import com.example.brassheroes.items.Weapon;
 
 import java.util.Random;
 
+import static com.example.brassheroes.R.drawable.armor;
+import static com.example.brassheroes.R.drawable.armor1;
+import static com.example.brassheroes.R.drawable.armor2;
+import static com.example.brassheroes.R.drawable.armor3;
+import static com.example.brassheroes.R.drawable.armor5;
+import static com.example.brassheroes.R.drawable.armor6;
+import static com.example.brassheroes.R.drawable.armor7;
+import static com.example.brassheroes.R.drawable.armor8;
 import static com.example.brassheroes.R.drawable.enemy1;
 import static com.example.brassheroes.R.drawable.enemy2;
 import static com.example.brassheroes.R.drawable.enemy3;
 import static com.example.brassheroes.R.drawable.enemy4;
 import static com.example.brassheroes.R.drawable.enemy5;
+import static com.example.brassheroes.R.drawable.sword;
+import static com.example.brassheroes.R.drawable.sword1;
+import static com.example.brassheroes.R.drawable.sword2;
+import static com.example.brassheroes.R.drawable.sword3;
+import static com.example.brassheroes.R.drawable.sword4;
+import static com.example.brassheroes.R.drawable.sword5;
 
 
 public class RNG {
@@ -25,7 +39,7 @@ public class RNG {
 
 
     //list of available swords
-    private static final Equipment[] swords = {
+    private static final Equipment[] weapons = {
             new Weapon("Longsword", 8, 0, 0, 2),
             new Weapon("Shortsword", 4, 0, 0, 1),
             new Weapon("Sword of fire", 13, 0, 5, 3),
@@ -83,6 +97,10 @@ public class RNG {
 
     private static final int[] enemyPictures = new int[]{enemy1, enemy2, enemy3, enemy4, enemy5};
 
+    private static final int[] weaponIcons = new int[]{sword, sword1, sword2, sword3, sword4, sword5};
+
+    private static final int[] armorIcons = new int[]{armor, armor1, armor2, armor3, armor5, armor6, armor7, armor8};
+
     public static String randomName() {
         return firstNames[randomNumber(firstNames.length, 0)] + " "
                 + lastNames[randomNumber(lastNames.length, 0)];
@@ -92,6 +110,7 @@ public class RNG {
         Random r = new Random();
         return r.nextInt(range) + start;
     }
+
     public static double randomNumber() {
         Random r = new Random();
         return r.nextDouble();
@@ -107,27 +126,36 @@ public class RNG {
 
     public static Equipment randomWeapon(int playersLevel) {
         boolean shouldRepeat = true;
-        Equipment temp=swords[0];
+        Equipment temp = weapons[0];
         while (shouldRepeat) {
-            temp = swords[randomNumber(swords.length, 0)];
+            temp = weapons[randomNumber(weapons.length, 0)];
             if (temp.getLevelRequirement() <= playersLevel) {
                 shouldRepeat = false;
             }
         }
-
+        temp.setIcon(randomWeaponIcon());
         return temp;
     }
 
     public static Equipment randomArmor(int playersLevel) {
         boolean shouldRepeat = true;
-        Equipment temp=armors[0];
+        Equipment temp = armors[0];
         while (shouldRepeat) {
             temp = armors[randomNumber(armors.length, 0)];
             if (temp.getLevelRequirement() <= playersLevel) {
                 shouldRepeat = false;
             }
         }
-
+        temp.setIcon(randomArmorIcon());
         return temp;
     }
+
+    public static int randomArmorIcon() {
+        return armorIcons[randomNumber(armorIcons.length, 0)];
+    }
+
+    public static int randomWeaponIcon() {
+        return weaponIcons[randomNumber(weaponIcons.length, 0)];
+    }
+
 }

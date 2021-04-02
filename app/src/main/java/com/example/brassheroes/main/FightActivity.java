@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.Persistence;
+import com.example.brassheroes.gamemechanics.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.Enemy;
 import com.example.brassheroes.characters.GameEntity;
@@ -67,11 +67,15 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             player.gainExp(60);
             player.setHealth(player.getMaxHealth());
 
-            inventory.add(RNG.randomWeapon(player.getLevel()));
-            inventory.add(RNG.randomArmor(player.getLevel()));
+            if (RNG.randomNumber()<=0.5){
+                inventory.add(RNG.randomWeapon(player.getLevel()));
+            }
+            if (RNG.randomNumber()<=0.5){
+                inventory.add(RNG.randomArmor(player.getLevel()));
+            }
 
-            System.out.println(player.toString());
-            System.out.println(inventory.toString());
+           // System.out.println(player.toString());
+           // System.out.println(inventory.toString());
 
             Persistence.saveData(player, saveGameName);
 

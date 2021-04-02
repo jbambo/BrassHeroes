@@ -1,4 +1,4 @@
-package com.example.brassheroes;
+package com.example.brassheroes.gamemechanics;
 
 import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.items.Equipment;

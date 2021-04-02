@@ -3,7 +3,6 @@ package com.example.brassheroes.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -11,7 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.Persistence;
+import com.example.brassheroes.gamemechanics.CustomAdapter;
+import com.example.brassheroes.gamemechanics.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.items.Equipment;
@@ -72,11 +72,13 @@ public class PlayerActivity extends AppCompatActivity {
         File[] files2 = inventoryDir.listFiles();
         File file2 = new File(inventoryDir, files2[0].getName());
         inventory = Persistence.getData(inventory, file2);
+
         //create an adapter for the list view
         //single row is defined in: list_layout.xml
         //R.id.inventoryListDescription is the text view that will be populated with data
-        ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
-                (this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
+//        ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
+//                (this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
+        CustomAdapter adapter = new CustomAdapter(inventory,this);
         listView.setAdapter(adapter);
 
         playerPortrait.setImageResource(player.getPortrait());

@@ -23,7 +23,7 @@
         </activity>
 
         <service
-            android:name="com.example.brassheroes.BackgroundSoundService"
+            android:name="com.example.brassheroes.gamemechanics.BackgroundSoundService"
             android:enabled="true" />
     </application>
 

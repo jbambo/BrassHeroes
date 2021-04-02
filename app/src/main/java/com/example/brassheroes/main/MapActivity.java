@@ -10,13 +10,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.Persistence;
+import com.example.brassheroes.gamemechanics.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.GameEntity;
-import com.example.brassheroes.items.Equipment;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener {
 

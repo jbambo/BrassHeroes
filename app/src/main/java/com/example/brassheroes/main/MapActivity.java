@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.brassheroes.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.GameEntity;
+import com.example.brassheroes.items.Equipment;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,12 +47,13 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         File[] files = gamesDir.listFiles();
         //select the file
         File file = new File(gamesDir, files[0].getName());
-        try {
-            //call the function
-            player = Persistence.getData(player, file);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        player = Persistence.getData(player, file);
+
+//        File inventoryDir = new File(getFilesDir(), "savedInventory");
+//        File[] files1 = inventoryDir.listFiles();
+//
+//        File file1 = new File(inventoryDir, files1[0].getName());
+
     }
 
     private void initControls() {

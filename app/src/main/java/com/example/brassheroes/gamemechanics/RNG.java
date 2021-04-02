@@ -1,5 +1,9 @@
 package com.example.brassheroes.gamemechanics;
 
+import com.example.brassheroes.items.Armor;
+import com.example.brassheroes.items.Equipment;
+import com.example.brassheroes.items.Weapon;
+
 import java.util.Random;
 
 import static com.example.brassheroes.R.drawable.enemy1;
@@ -10,28 +14,72 @@ import static com.example.brassheroes.R.drawable.enemy5;
 
 
 public class RNG {
-    private static final String[] damageTypes = {
-            "magic",
-            "mental",
-            "physical"
+    private static final String[] damageTypes = {"magic", "mental", "physical"};
+
+    private static final String[] firstNames =
+            {"Erwin", "Niccolo", "Leo", "Fyodor", "Friedrich", "Arthur", "Wolfgang"};
+
+    private static final String[] lastNames =
+            {"Schroedinger", "Machiavelli", "Tolstoy", "Dostoyevsky",
+                    "Nietzsche", "Schopenhauer", "von Goethe"};
+
+
+    //list of available swords
+    private static final Equipment[] swords = {
+            new Weapon("Longsword", 8, 0, 0, 2),
+            new Weapon("Shortsword", 4, 0, 0, 1),
+            new Weapon("Sword of fire", 13, 0, 5, 3),
+            new Weapon("Infinity's Edge", 15, 0, 0, 4),
+            new Weapon("Sword of the Night", 18, 0, 0, 5),
+            new Weapon("Light's Bane", 22, 0, 0, 7),
+            new Weapon("Lion Sin sword", 27, 0, 0, 8),
+            new Weapon("Dragon Sin Sword", 35, 0, 0, 9),
+            new Weapon("Golden Sword", 40, 0, 0, 10),
+            new Weapon("Tungsten Sword", 55, 0, 0, 12),
+            new Weapon("Cactus Sword", 60, 20, 15, 14),
+            new Weapon("Magic Sword", 85, 0, 0, 17),
+            new Weapon("Arcane Sword", 65, 0, 0, 12),
+            new Weapon("Mythril Sword", 80, 0, 0, 15),
+            new Weapon("Hallowed Sword", 90, 0, 0, 19),
+            new Weapon("Copper Sword", 40, 0, 0, 1)
     };
 
-    private static final String[] firstNames = {
-            "Erwin",
-            "Niccolo",
-            "Leo",
-            "Fyodor",
-            "Friedrich",
-            "Arthur",
-            "Wolfgang"};
-    private static final String[] lastNames = {
-            "Schroedinger",
-            "Machiavelli",
-            "Tolstoy",
-            "Dostoyevsky",
-            "Nietzsche",
-            "Schopenhauer",
-            "von Goethe"};
+    //list of available armors
+    private static final Equipment[] armors = {
+            new Armor("Plate Armor", 0, 0, 10, 1),
+            new Armor("Chainmail", 0, 5, 5, 1),
+
+            new Armor("Magic Robe", 0, 0, 15, 3),
+            new Armor("Spirit Visage", 0, 10, 10, 3),
+
+            new Armor("Wooden Armor", 0, 5, 20, 5),
+            new Armor("Gold Armor", 0, 15, 15, 5),
+
+            new Armor("Silver Armor", 0, 10, 25, 7),
+            new Armor("Titanium Armor", 0, 20, 20, 7),
+
+            new Armor("Palladium Armor", 0, 15, 30, 9),
+            new Armor("Tungsten Armor", 0, 25, 25, 9),
+
+            new Armor("Cactus Armor", 0, 20, 35, 11),
+            new Armor("Molten Armor", 0, 30, 30, 11),
+
+            new Armor("Demonite Armor", 0, 25, 40, 13),
+            new Armor("Cobalt Armor", 0, 35, 35, 13),
+
+            new Armor("Mythril Armor", 0, 30, 45, 15),
+            new Armor("Shroomite Armor", 0, 40, 40, 15),
+
+            new Armor("Iron Armor", 0, 35, 50, 17),
+            new Armor("Lead Armor", 0, 45, 45, 17),
+
+            new Armor("Chlorophyte Armor", 0, 40, 55, 19),
+            new Armor("Arcane Armor", 0, 50, 50, 19),
+
+            new Armor("Dark Armor", 0, 45, 60, 21),
+            new Armor("Light Armor", 0, 55, 55, 21)
+    };
+
 
     private static final int[] enemyPictures = new int[]{enemy1, enemy2, enemy3, enemy4, enemy5};
 
@@ -44,6 +92,10 @@ public class RNG {
         Random r = new Random();
         return r.nextInt(range) + start;
     }
+    public static double randomNumber() {
+        Random r = new Random();
+        return r.nextDouble();
+    }
 
     public static int randomEnemyPortrait() {
         return enemyPictures[randomNumber(enemyPictures.length, 0)];
@@ -53,4 +105,29 @@ public class RNG {
         return damageTypes[randomNumber(damageTypes.length, 0)];
     }
 
+    public static Equipment randomWeapon(int playersLevel) {
+        boolean shouldRepeat = true;
+        Equipment temp=swords[0];
+        while (shouldRepeat) {
+            temp = swords[randomNumber(swords.length, 0)];
+            if (temp.getLevelRequirement() <= playersLevel) {
+                shouldRepeat = false;
+            }
+        }
+
+        return temp;
+    }
+
+    public static Equipment randomArmor(int playersLevel) {
+        boolean shouldRepeat = true;
+        Equipment temp=armors[0];
+        while (shouldRepeat) {
+            temp = armors[randomNumber(armors.length, 0)];
+            if (temp.getLevelRequirement() <= playersLevel) {
+                shouldRepeat = false;
+            }
+        }
+
+        return temp;
+    }
 }

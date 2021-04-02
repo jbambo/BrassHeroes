@@ -16,7 +16,9 @@ import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.characters.Knight;
 import com.example.brassheroes.characters.Paladin;
 import com.example.brassheroes.characters.Wizard;
+import com.example.brassheroes.items.Armor;
 import com.example.brassheroes.items.Equipment;
+import com.example.brassheroes.items.Weapon;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,12 +72,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         gamesDir = new File(getFilesDir(), "savedGames");
         inventoryDir = new File(getFilesDir(), "savedInventory");
-        inventory = new ArrayList<>();
-        inventory.add(new Equipment());
-        inventory.add(new Equipment());
-        inventory.add(new Equipment());
 
-
+        inventory= new ArrayList<>();
     }
 
     public boolean check() {
@@ -98,8 +96,16 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 //create inital save file
                 File playerSave = new File(gamesDir, "Saved-" + username);
                 Persistence.saveData(player, playerSave);
+
                 //create initial inventory save file
                 File inventorySave = new File(inventoryDir, "Inventory-" + username);
+                inventory.add(new Armor("test",
+                        3,3,3,1));
+                inventory.add(new Weapon("test",
+                        3,3,3,1));
+                System.out.println("1: "+inventory.get(0));
+                System.out.println("2: "+inventory.get(1));
+
                 Persistence.saveData(inventory, inventorySave);
 
 

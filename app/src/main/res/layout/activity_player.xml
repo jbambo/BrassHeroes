@@ -18,6 +18,7 @@
         tools:text="@tools:sample/lorem/random" />
 
     <ListView
+        android:layout_marginTop="10dp"
         android:id="@+id/playerItemList"
         android:layout_width="0dp"
         android:layout_height="0dp"

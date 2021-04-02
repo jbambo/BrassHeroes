@@ -1,11 +1,12 @@
 package com.example.brassheroes.items;
 
 public class Equipment {
-    private String name = "sword of testing";
-    private int damageStat = 42;
-    private int healthStat = 0;
-    private int armorStat = 0;
-    private int levelRequirement = 1;
+    private String name ;
+    private String type;
+    private int damageStat;
+    private int healthStat;
+    private int armorStat;
+    private int levelRequirement;
     //later rarity and unique modifiers
 
     public Equipment(String name, int damageStat, int healthStat, int armorStat, int levelRequirement) {
@@ -66,5 +67,13 @@ public class Equipment {
                 " Health: " + healthStat +
                 "\nArmor: " + armorStat +
                 " Req. level: " + levelRequirement;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

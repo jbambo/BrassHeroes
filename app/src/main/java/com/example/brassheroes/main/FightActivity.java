@@ -16,14 +16,20 @@ import com.example.brassheroes.R;
 import com.example.brassheroes.characters.Enemy;
 import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.gamemechanics.RNG;
+import com.example.brassheroes.items.Equipment;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class FightActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnAttack, btnFlee;
 
     Enemy enemy;
+
+    File gamesDir, inventoryDir, saveGameName, eqSaveName;
+
+    File[] inventoryFiles;
 
     GameEntity player;
 
@@ -32,6 +38,8 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     ProgressBar enemyHealth, playerHealth;
 
     ImageView enemyPortrait;
+
+    ArrayList<Equipment> inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +54,12 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     private void attackMove() {
         //System.out.println(enemy.getLevel()+"- lv, damage: "+enemy.getCurrentDamage());
 
-        System.out.println("enemy hp before: " + enemy.getHealth());
-        enemy.receiveDamage(player.getCurrentDamage(),player.getDamageType());
+        //System.out.println("enemy hp before: " + enemy.getHealth());
+
+        enemy.receiveDamage(player.getCurrentDamage(), player.getDamageType());
         enemyHealth.setProgress(enemy.getHealth(), true);
-        System.out.println("enemy hp after: " + enemy.getHealth());
+
+        //System.out.println("enemy hp after: " + enemy.getHealth());
 
         //check win condition
         if (enemy.getHealth() <= 0) {
@@ -57,9 +67,19 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             player.gainExp(60);
             player.setHealth(player.getMaxHealth());
 
-            File file = new File(getFilesDir(), "Saved-" + player.getName());
+            inventory.add(RNG.randomWeapon(player.getLevel()));
+            inventory.add(RNG.randomArmor(player.getLevel()));
 
-            Persistence.saveData(player, file);
+            System.out.println(player.toString());
+            System.out.println(inventory.toString());
+
+            Persistence.saveData(player, saveGameName);
+
+            //delete the old inventory file before saving
+            // inventoryFiles[0].delete();
+            // File inventorySave = new File(inventoryDir, "Inventory-" + player.getName());
+            Persistence.saveData(inventory, eqSaveName);
+
 
             Toast.makeText(this, "you won!", Toast.LENGTH_SHORT).show();
 
@@ -68,12 +88,12 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
 
-        System.out.println("player hp before: " + player.getHealth());
+        //System.out.println("player hp before: " + player.getHealth());
 
         player.receiveDamage(enemy.getCurrentDamage(), enemy.getDamageType());
         playerHealth.setProgress(player.getHealth(), true);
 
-        System.out.println("player hp after: " + player.getHealth());
+        //System.out.println("player hp after: " + player.getHealth());
 
 
         if (player.getHealth() <= 0) {
@@ -82,19 +102,32 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("won", false);
             startActivity(intent);
         }
-
-
     }
 
     private void initPlayers() {
+        //init enemy
         enemy = new Enemy();
 
-        File gamesDir = new File(getFilesDir(), "savedGames");
+        //main save directories
+        gamesDir = new File(getFilesDir(), "savedGames");
+        inventoryDir = new File(getFilesDir(), "savedInventory");
 
-        File[] files = gamesDir.listFiles();
+        //list files in main directories
+        File[] savedGameFiles = gamesDir.listFiles();   //save dir
+        inventoryFiles = inventoryDir.listFiles();  //inventory dir
 
-        File file = new File(gamesDir, files[0].getName());
-        player = Persistence.getData(player, file);
+        //get name of the file
+        //save file of the game
+        saveGameName = new File(gamesDir, savedGameFiles[0].getName());
+        //save file of inventory
+        eqSaveName = new File(inventoryDir, inventoryFiles[0].getName());
+
+        //init player
+        player = Persistence.getData(player, saveGameName);
+
+        //init inventory list
+        inventory = Persistence.getData(inventory, eqSaveName);
+
 
         while (player.getLevel() > enemy.getLevel()) {
             enemy.gainExp(enemy.getExpNeeded());
@@ -127,7 +160,7 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         enemyName.setText(enemy.getName());
 
         enemyClass = findViewById(R.id.enemyClass);
-        enemyClass.setText("the fallen "+enemy.getProfession());
+        enemyClass.setText("the fallen " + enemy.getProfession());
     }
 
     private void run() {

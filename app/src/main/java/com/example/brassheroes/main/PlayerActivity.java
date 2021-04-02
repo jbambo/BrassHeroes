@@ -18,7 +18,6 @@ import com.example.brassheroes.items.Equipment;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PlayerActivity extends AppCompatActivity {
     private TextView playerInfo;
@@ -32,7 +31,6 @@ public class PlayerActivity extends AppCompatActivity {
     private Button btnGoBack;
 
     private ImageView playerPortrait;
-
 
 
     @Override
@@ -50,7 +48,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         playerInfo = findViewById(R.id.playerStats);
         btnGoBack = findViewById(R.id.btnGoBack);
-
+        //list view of the inventory
         listView = findViewById(R.id.playerItemList);
 
         btnGoBack.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +60,7 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void showPlayerInfo() {
+        //get players data and inventory data
         File gamesDir = new File(getFilesDir(), "savedGames");
         File inventoryDir = new File(getFilesDir(), "savedInventory");
 
@@ -73,15 +72,16 @@ public class PlayerActivity extends AppCompatActivity {
         File[] files2 = inventoryDir.listFiles();
         File file2 = new File(inventoryDir, files2[0].getName());
         inventory = Persistence.getData(inventory, file2);
-
-        ArrayAdapter<Equipment> adapter = new ArrayAdapter<>(this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
+        //create an adapter for the list view
+        //single row is defined in: list_layout.xml
+        //R.id.inventoryListDescription is the text view that will be populated with data
+        ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
+                (this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
         listView.setAdapter(adapter);
 
         playerPortrait.setImageResource(player.getPortrait());
 
     }
-
-
     private void goBack() {
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);

@@ -1,12 +1,5 @@
 package com.example.brassheroes.characters;
 
-import android.graphics.drawable.Drawable;
-
-import com.example.brassheroes.R;
-import com.example.brassheroes.items.Equipment;
-
-import java.util.ArrayList;
-
 public class GameEntity {
 
     private String name;
@@ -24,7 +17,6 @@ public class GameEntity {
     private int exp = 0;
     private int expNeeded = 100;
     private int portrait;
-    private ArrayList<Equipment> playersEquipment;
 
     public GameEntity(
             String name,
@@ -175,7 +167,7 @@ public class GameEntity {
             setExp(0);
         } else {
             setExp(getExp() + expAmt);
-            //check now if level up possible
+            //check now if level up possible, if yes then level up
             if (getExpNeeded() <= getExp()) {
                 levelUp();
                 setExp(0);
@@ -268,25 +260,6 @@ public class GameEntity {
                 "\nLevel: " + getLevel();
     }
 
-    public ArrayList<Equipment> getPlayersEquipment() {
-        return playersEquipment;
-    }
-
-    public void setPlayersEquipment(ArrayList<Equipment> playersEquipment) {
-        this.playersEquipment = playersEquipment;
-    }
-
-    public void equipItems() {
-        int totalHp = 0, totalDmg = 0, totalArmor = 0;
-        for (Equipment e : getPlayersEquipment()) {
-            totalHp = totalHp + e.getHealthStat();
-            totalDmg = totalDmg + e.getHealthStat();
-            totalArmor = totalArmor + e.getHealthStat();
-        }
-        setMaxHealth(totalHp);
-        setArmor(totalArmor);
-        setCurrentDamage(totalDmg);
-    }
 
     public int getPortrait() {
         return portrait;
@@ -295,4 +268,6 @@ public class GameEntity {
     public void setPortrait(int portrait) {
         this.portrait = portrait;
     }
+
+
 }

@@ -12,10 +12,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Persistence {
 
-    private static ArrayList<Equipment> equipment;
 
     public static void saveData(GameEntity player, File file) {
 
@@ -57,8 +57,7 @@ public class Persistence {
 
             Gson gson = new Gson();
 
-            Type collectionType = new TypeToken<ArrayList<Equipment>>() {
-            }.getType();
+            Type collectionType = new TypeToken<ArrayList<Equipment>>() {}.getType();
 
             return gson.fromJson(data, collectionType);
 
@@ -69,7 +68,7 @@ public class Persistence {
     }
 
     public static GameEntity getData(GameEntity player, File file) {
-        //start file and buffered reader
+        //start file reader  and buffered reader
         try {
             Gson gson = new Gson();
             FileReader fileReader = new FileReader(file);

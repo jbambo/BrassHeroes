@@ -11,6 +11,6 @@ public class Knight extends GameEntity {
         setArmorInc(7);
         setMaxHealth(115);
         setDamageType("physical");
-        setPortrait(R.drawable.wizard);
+        setPortrait(R.drawable.knight);
     }
 }

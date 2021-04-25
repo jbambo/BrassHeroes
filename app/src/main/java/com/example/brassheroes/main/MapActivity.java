@@ -1,6 +1,5 @@
 package com.example.brassheroes.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,21 +9,24 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.gamemechanics.Persistence;
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.GameEntity;
-
-import java.io.File;
+import com.example.brassheroes.gamemechanics.Persistence;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener {
 
-    GameEntity player;
+    private GameEntity player;
 
     private Button btnInventory, btnFight;
 
     private TextView playerName;
 
-    private ProgressBar playerExpBar;
+    private ProgressBar playerExpBar, playerProgressBar;
+
+    private Persistence persistence;
+
+    private final int INVENTORY_BUTTON_ID = R.id.btnInventory;
+    private final int FIGHT_BUTTON_ID = R.id.btnFight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +41,19 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
     //function to extract saved data
     private void getData() {
-        //file object with saved games dir
-        File gamesDir = new File(getFilesDir(), "savedGames");
-        //list of files on saved games dir
-        File[] files = gamesDir.listFiles();
-        //select the file
-        File file = new File(gamesDir, files[0].getName());
-        player = Persistence.getData(player, file);
-
-//        File inventoryDir = new File(getFilesDir(), "savedInventory");
-//        File[] files1 = inventoryDir.listFiles();
-//
-//        File file1 = new File(inventoryDir, files1[0].getName());
-
+        persistence = new Persistence(this);
+        player = persistence.getSavedGame();
     }
 
     private void initControls() {
 
         playerExpBar = findViewById(R.id.mapPlayerExp);
+        playerProgressBar = findViewById(R.id.mapPlayerProgress);
 
         playerExpBar.setMax(player.getExpNeeded());
         playerExpBar.setProgress(player.getExp());
+
+        playerProgressBar.setProgress(player.getGameProgress());
 
         playerName = findViewById(R.id.playerNameMap);
         playerName.setText(player.getName());
@@ -81,14 +75,13 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnInventory:
+            case INVENTORY_BUTTON_ID:
                 openInventory();
                 break;
-            case R.id.btnFight:
+            case FIGHT_BUTTON_ID:
                 startFight();
                 break;
         }

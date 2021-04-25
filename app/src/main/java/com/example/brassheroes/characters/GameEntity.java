@@ -1,6 +1,11 @@
 package com.example.brassheroes.characters;
 
+import com.example.brassheroes.items.Equipment;
+
 public class GameEntity {
+
+    private final int HEALTH_PER_LV_INCREASE = 10;
+    private  final int EXP_NEEDED_INCREASE = 20;
 
     private String name;
     private String profession;
@@ -17,6 +22,11 @@ public class GameEntity {
     private int exp = 0;
     private int expNeeded = 100;
     private int portrait;
+    private int gameProgress=0;
+
+    private Equipment equippedArmor=null;
+    private Equipment equippedWeapon=null;
+
 
     public GameEntity(
             String name,
@@ -147,13 +157,13 @@ public class GameEntity {
         //set damage
         setCurrentDamage(getCurrentDamage() + getDamageInc());
         // set exp needed for next level
-        setExpNeeded(getExpNeeded() + 20);
+        setExpNeeded(getExpNeeded() + EXP_NEEDED_INCREASE);
         //increase level by 1
         setLevel(getLevel() + 1);
         //set health
         setMaxHealth(getMaxHealth() + getHealthInc());
         //change health/level increase
-        setHealthInc(getHealthInc() + 10);
+        setHealthInc(getHealthInc() + HEALTH_PER_LV_INCREASE);
         //increase armor
         setArmor(getArmor() + getArmorInc());
 
@@ -195,58 +205,8 @@ public class GameEntity {
         return damageType;
     }
 
-    private int damageCalculation(int enemyDamage) {
-        if ((enemyDamage - getArmor() <= 5)) {
-            return (int) (getHealth() - (enemyDamage * 0.4));
-        } else
-            return (getHealth() - (enemyDamage - getArmor()));
-    }
-
-    private int damageCalculationSEffective(int enemyDamage) {
-        double superEffective = 1.5;
-        if ((enemyDamage - getArmor() <= 5)) {
-            return (int) ((getHealth() - (enemyDamage * 0.4)) * superEffective);
-        } else
-            return (int) ((getHealth() - (enemyDamage - getArmor())) * superEffective);
-    }
-
     public void setDamageType(String damageType) {
         this.damageType = damageType;
-    }
-
-    public void receiveDamage(int enemyDamage, String enemyType) {
-
-        setHealth(damageCalculation(enemyDamage));
-//        //physical recieves damage
-//        switch (enemyType) {
-//            case "physical":
-//                if (getDamageType().equals("magic")) {
-//                    setHealth(damageCalculationSEffective(enemyDamage));
-//                } else setHealth(damageCalculation(enemyDamage));
-//
-//                break;
-//
-//            //mental recieves damage
-//            case "mental":
-//                if (enemyType.equals("physical")) {
-//                    setHealth(damageCalculationSEffective(enemyDamage));
-//
-//                } else setHealth(damageCalculation(enemyDamage));
-//
-//                break;
-//
-//            //magic recieves damage
-//            case "magic":
-//                if (enemyType.equals("mental")) {
-//                    setHealth(damageCalculationSEffective(enemyDamage));
-//
-//                } else setHealth(damageCalculation(enemyDamage));
-//
-//                break;
-//            default:
-//                setHealth(damageCalculation(enemyDamage));
-//                break;
-//        }
     }
 
     @Override
@@ -269,5 +229,39 @@ public class GameEntity {
         this.portrait = portrait;
     }
 
+    public int getGameProgress() {
+        return gameProgress;
+    }
+
+    public void setGameProgress(int gameProgress) {
+        this.gameProgress = gameProgress;
+    }
+
+    public Equipment getEquippedArmor() {
+        return equippedArmor;
+    }
+
+    public void setEquippedArmor(Equipment equippedArmor) {
+        this.equippedArmor = equippedArmor;
+    }
+
+    public boolean isArmorEquipped(){
+        if (this.equippedArmor==null){
+            return false;
+        }else return true;
+    }
+
+    public Equipment getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public void setEquippedWeapon(Equipment equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+    public boolean isWeaponEquipped(){
+        if (this.equippedWeapon==null){
+            return false;
+        }else return true;
+    }
 
 }

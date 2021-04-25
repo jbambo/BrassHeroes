@@ -8,12 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.brassheroes.R;
+import com.example.brassheroes.items.Armor;
 import com.example.brassheroes.items.Equipment;
+import com.example.brassheroes.items.Weapon;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,7 @@ public class CustomAdapter extends ArrayAdapter<Equipment> implements View.OnCli
 
     private ArrayList<Equipment> inventory;
     Context context;
+    PlayerManager playerManager;
 
     // View lookup cache
     private static class ViewHolder {
@@ -33,6 +37,7 @@ public class CustomAdapter extends ArrayAdapter<Equipment> implements View.OnCli
         super(context, R.layout.list_layout, inventory);
         this.inventory = inventory;
         this.context = context;
+        playerManager = new PlayerManager(context);
     }
 
     @NonNull
@@ -75,8 +80,11 @@ public class CustomAdapter extends ArrayAdapter<Equipment> implements View.OnCli
         Equipment equipment = (Equipment) object;
         switch (v.getId()) {
             case R.id.inventoryEquipPiece:
-                System.out.println("Equipped: " + equipment.toString());
+               playerManager.equip(equipment);
+                //System.out.println(object.getClass().toString());
+                Toast.makeText(context, equipment.getType()+" equipped", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 }
+

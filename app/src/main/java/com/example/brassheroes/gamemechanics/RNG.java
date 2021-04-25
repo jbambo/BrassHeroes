@@ -158,4 +158,5 @@ public class RNG {
         return weaponIcons[randomNumber(weaponIcons.length, 0)];
     }
 
+
 }

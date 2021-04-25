@@ -1,6 +1,5 @@
 package com.example.brassheroes.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +15,10 @@ import com.example.brassheroes.characters.Knight;
 import com.example.brassheroes.characters.Paladin;
 import com.example.brassheroes.characters.Wizard;
 import com.example.brassheroes.gamemechanics.Persistence;
+import com.example.brassheroes.items.Armor;
 import com.example.brassheroes.items.Equipment;
+import com.example.brassheroes.items.Weapon;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,9 +37,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private String username;
 
-    private File gamesDir, inventoryDir;
-
     private boolean classPicked = false;
+
+    Persistence persistence;
+
+    private final int WIZARD_IMG_ID = R.id.imgWizard, KNIGHT_IMG_ID = R.id.imgKnight,
+            PALADIN_IMG_ID = R.id.imgPaladin, START_GAME_BTN_ID = R.id.startGameBtn;
 
 
     @Override
@@ -52,26 +55,28 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void initControls() {
+        persistence = new Persistence(this);
+
         usernameTxt = findViewById(R.id.username);
 
-        imgClass1 = findViewById(R.id.imgKnight);
-        imgClass2 = findViewById(R.id.imgPaladin);
-        imgClass3 = findViewById(R.id.imgWizard);
+        imgClass1 = findViewById(KNIGHT_IMG_ID);
+        imgClass2 = findViewById(PALADIN_IMG_ID);
+        imgClass3 = findViewById(WIZARD_IMG_ID);
 
         btnClass1 = findViewById(R.id.btnClass1);
         btnClass2 = findViewById(R.id.btnClass2);
         btnClass3 = findViewById(R.id.btnClass3);
-        Button btnStartGame = findViewById(R.id.startGame);
+        Button btnStartGame = findViewById(START_GAME_BTN_ID);
 
         imgClass1.setOnClickListener(this);
         imgClass2.setOnClickListener(this);
         imgClass3.setOnClickListener(this);
         btnStartGame.setOnClickListener(this);
 
-        gamesDir = new File(getFilesDir(), "savedGames");
-        inventoryDir = new File(getFilesDir(), "savedInventory");
-
         inventory = new ArrayList<>();
+        inventory.add(new Armor().addStartingArmor());
+        inventory.add(new Weapon().addStartingWeapon());
+
     }
 
     public boolean check() {
@@ -87,33 +92,21 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         boolean correctInput = check();
 
         if (correctInput && classPicked) {
-
             player.setName(username);
 
-            if (gamesDir.isDirectory() && inventoryDir.isDirectory()) {
-                //create inital save file
-                File playerSave = new File(gamesDir, "Saved-" + username);
-                Persistence.saveData(player, playerSave);
-
-                //create initial inventory save file
-                File inventorySave = new File(inventoryDir, "Inventory-" + username);
-
-                Persistence.saveData(inventory, inventorySave);
-
-
+            if (persistence.areGeneralDirs()) {
+                persistence.saveInitalData(player);
+                persistence.saveInitialData(inventory, username);
                 Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
-
             }
-
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgKnight:
+            case KNIGHT_IMG_ID:
                 selectView(imgClass1);
                 frameView(btnClass1);
 
@@ -127,7 +120,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 player = new Knight();
                 break;
 
-            case R.id.imgPaladin:
+            case PALADIN_IMG_ID:
                 selectView(imgClass2);
                 frameView(btnClass2);
 
@@ -142,7 +135,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
 
-            case R.id.imgWizard:
+            case WIZARD_IMG_ID:
                 selectView(imgClass3);
                 frameView(btnClass3);
 
@@ -156,7 +149,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 player = new Wizard();
                 break;
 
-            case R.id.startGame:
+            case START_GAME_BTN_ID:
                 newGame();
         }
     }

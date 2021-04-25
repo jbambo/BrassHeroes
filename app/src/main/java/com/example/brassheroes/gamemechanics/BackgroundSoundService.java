@@ -9,6 +9,7 @@ import com.example.brassheroes.R;
 
 public class BackgroundSoundService extends Service {
     private static final String TAG = null;
+    private final int GAME_MUSIC_THEME = R.raw.theme;
     MediaPlayer player;
     public IBinder onBind(Intent arg0) {
         return null;
@@ -16,7 +17,7 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.theme);
+        player = MediaPlayer.create(this,GAME_MUSIC_THEME );
         player.setLooping(true); // Set looping
         player.setVolume(30,30);
 

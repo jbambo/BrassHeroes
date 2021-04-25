@@ -32,6 +32,8 @@ public class PlayerActivity extends AppCompatActivity {
 
     private ImageView playerPortrait;
 
+    private Persistence persistence;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,16 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void initControls() {
+        persistence = new Persistence(this);
+
+        player = persistence.getSavedGame();
+        inventory = persistence.getSavedInventory();
+
         playerPortrait = findViewById(R.id.playerPortrait);
 
         playerInfo = findViewById(R.id.playerStats);
         btnGoBack = findViewById(R.id.btnGoBack);
+
         //list view of the inventory
         listView = findViewById(R.id.playerItemList);
 
@@ -60,29 +68,16 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void showPlayerInfo() {
-        //get players data and inventory data
-        File gamesDir = new File(getFilesDir(), "savedGames");
-        File inventoryDir = new File(getFilesDir(), "savedInventory");
-
-        File[] files = gamesDir.listFiles();
-        File file = new File(gamesDir, files[0].getName());
-        player = Persistence.getData(player, file);
         playerInfo.setText(player.toString());
-
-        File[] files2 = inventoryDir.listFiles();
-        File file2 = new File(inventoryDir, files2[0].getName());
-        inventory = Persistence.getData(inventory, file2);
 
         //create an adapter for the list view
         //single row is defined in: list_layout.xml
         //R.id.inventoryListDescription is the text view that will be populated with data
-//        ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
-//                (this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
+        //ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
+        //(this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
         CustomAdapter adapter = new CustomAdapter(inventory,this);
         listView.setAdapter(adapter);
-
         playerPortrait.setImageResource(player.getPortrait());
-
     }
     private void goBack() {
         Intent intent = new Intent(this, MapActivity.class);

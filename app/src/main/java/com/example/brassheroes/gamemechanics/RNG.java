@@ -14,6 +14,16 @@ import static com.example.brassheroes.R.drawable.armor5;
 import static com.example.brassheroes.R.drawable.armor6;
 import static com.example.brassheroes.R.drawable.armor7;
 import static com.example.brassheroes.R.drawable.armor8;
+import static com.example.brassheroes.R.drawable.chess_bishop;
+import static com.example.brassheroes.R.drawable.chess_black_bishop;
+import static com.example.brassheroes.R.drawable.chess_black_horse;
+import static com.example.brassheroes.R.drawable.chess_black_king;
+import static com.example.brassheroes.R.drawable.chess_black_queen;
+import static com.example.brassheroes.R.drawable.chess_black_rook;
+import static com.example.brassheroes.R.drawable.chess_horse;
+import static com.example.brassheroes.R.drawable.chess_king;
+import static com.example.brassheroes.R.drawable.chess_queen;
+import static com.example.brassheroes.R.drawable.chess_rook;
 import static com.example.brassheroes.R.drawable.enemy1;
 import static com.example.brassheroes.R.drawable.enemy2;
 import static com.example.brassheroes.R.drawable.enemy3;
@@ -36,6 +46,11 @@ public class RNG {
     private static final String[] lastNames =
             {"Schroedinger", "Machiavelli", "Tolstoy", "Dostoyevsky",
                     "Nietzsche", "Schopenhauer", "von Goethe"};
+    private static final String[] bossNames = {
+            "Grandmaster Bobby Fischer", "Grandmaster Magnus Carlsen", "Grandmaster Garry Kasparov",
+            "Grandmaster Jose Capablanca", "Grandmaster Hikaru Nakamura", "Grandmaster Boris Spassky",
+            "Grandmaster Elizabeth Harmon", "Grandmaster Judith Polgar"
+    };
 
 
     //list of available swords
@@ -54,8 +69,7 @@ public class RNG {
             new Weapon("Magic Sword", 85, 0, 0, 17),
             new Weapon("Arcane Sword", 65, 0, 0, 12),
             new Weapon("Mythril Sword", 80, 0, 0, 15),
-            new Weapon("Hallowed Sword", 90, 0, 0, 19),
-            new Weapon("Copper Sword", 40, 0, 0, 1)
+            new Weapon("Hallowed Sword", 90, 0, 0, 19)
     };
 
     //list of available armors
@@ -97,13 +111,21 @@ public class RNG {
 
     private static final int[] enemyPictures = new int[]{enemy1, enemy2, enemy3, enemy4, enemy5};
 
+    private static final int[] bossPictures = new int[]{chess_bishop, chess_horse, chess_king, chess_queen,
+            chess_rook, chess_black_bishop, chess_black_horse, chess_black_king, chess_black_queen, chess_black_rook};
+
     private static final int[] weaponIcons = new int[]{sword, sword1, sword2, sword3, sword4, sword5};
 
     private static final int[] armorIcons = new int[]{armor, armor1, armor2, armor3, armor5, armor6, armor7, armor8};
 
+
     public static String randomName() {
         return firstNames[randomNumber(firstNames.length, 0)] + " "
                 + lastNames[randomNumber(lastNames.length, 0)];
+    }
+
+    public static String randomBossName() {
+        return bossNames[randomNumber(bossNames.length, 0)];
     }
 
     public static int randomNumber(int range, int start) {
@@ -118,6 +140,10 @@ public class RNG {
 
     public static int randomEnemyPortrait() {
         return enemyPictures[randomNumber(enemyPictures.length, 0)];
+    }
+
+    public static int randomBossPortrait() {
+        return bossPictures[randomNumber(bossPictures.length, 0)];
     }
 
     public static String randomDamageType() {

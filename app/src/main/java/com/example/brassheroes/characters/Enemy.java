@@ -7,8 +7,8 @@ public class Enemy extends GameEntity {
         setDamageType(RNG.randomDamageType());
         setName(RNG.randomName());
         setPortrait(RNG.randomEnemyPortrait());
-        setArmor(4);
-        setBaseDamage(10);
+        setArmor(8);
+        setBaseDamage(14);
         if (getDamageType().equals("mental")){
             setProfession("Paladin");
         }

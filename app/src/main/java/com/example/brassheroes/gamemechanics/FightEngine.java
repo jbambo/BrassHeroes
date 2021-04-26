@@ -25,6 +25,8 @@ public class FightEngine {
     private final int LOW_BOUND_EXP = 20;
     private final int HIGH_BOUND_EXP = 60;
     private final int GAME_PROGRESS_AMOUNT = 15;
+    private final int BOSS_LEVEL_ADVANTAGE = 2;
+    private int bossLevel;
 
 
     public FightEngine(Context context) {
@@ -35,6 +37,7 @@ public class FightEngine {
         //3. get saved data
         this.mPlayer = persistence.getSavedGame();
         this.mInventory = persistence.getSavedInventory();
+        this.bossLevel = mPlayer.getLevel() + BOSS_LEVEL_ADVANTAGE;
         //4. spawn the enemy
         spawnEnemy();
     }
@@ -42,7 +45,7 @@ public class FightEngine {
     private void spawnEnemy() {
         if (mPlayer.getGameProgress() >= 100) {
             mPlayer.setGameProgress(0);
-            this.mEnemy = new Boss();
+            this.mEnemy = new Boss(bossLevel);
         } else {
             this.mEnemy = new Enemy();
             while (mPlayer.getLevel() > mEnemy.getLevel()) {
@@ -108,10 +111,6 @@ public class FightEngine {
         return mEnemy;
     }
 
-    public void setEnemy(Enemy mEnemy) {
-        this.mEnemy = mEnemy;
-    }
-
     private int damageCalculation(int enemyDamage, int targetArmor, int targetHealth) {
         if ((enemyDamage - targetArmor <= 5)) {
             return (int) (targetHealth - (enemyDamage * 0.4));
@@ -126,23 +125,28 @@ public class FightEngine {
             int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
             int totalArmor = target.getArmor() + target.getEquippedArmor().getArmorStat();
             int totalHealth = target.getHealth() + target.getEquippedArmor().getHealthStat();
-
+            System.out.println("damage both equipped: " + damageCalculation(totalDamage, totalArmor, totalHealth));
             target.setHealth(damageCalculation(totalDamage, totalArmor, totalHealth));
-        }
+        }else
         //case only target
         if (target.isArmorEquipped()) {
             int totalArmor = target.getArmor() + target.getEquippedArmor().getArmorStat();
             int totalHealth = target.getHealth() + target.getEquippedArmor().getHealthStat();
             target.setHealth(damageCalculation(attacker.getCurrentDamage(), totalArmor, totalHealth));
-        }
+            System.out.println("damage armor equipped: " + damageCalculation(attacker.getCurrentDamage(), totalArmor, totalHealth));
+
+        }else
         //case only attacker
         if (attacker.isWeaponEquipped()) {
             int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
             target.setHealth(damageCalculation(totalDamage, target.getArmor(), target.getHealth()));
-        }
+            System.out.println("damage weapon equipped: " + damageCalculation(totalDamage, target.getArmor(), target.getHealth()));
+
+        }else
         //case none
-        if (!attacker.isWeaponEquipped()&&!target.isArmorEquipped()){
+        if (!attacker.isWeaponEquipped() && !target.isArmorEquipped()) {
             target.setHealth(damageCalculation(attacker.getCurrentDamage(), target.getArmor(), target.getHealth()));
+            System.out.println("damage none equipped: " + damageCalculation(attacker.getCurrentDamage(), target.getArmor(), target.getHealth()));
         }
 
     }

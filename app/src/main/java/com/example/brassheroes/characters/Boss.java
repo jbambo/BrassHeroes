@@ -1,5 +1,24 @@
 package com.example.brassheroes.characters;
 
-public class Boss extends Enemy{
+import com.example.brassheroes.gamemechanics.RNG;
 
+public class Boss extends Enemy {
+    private final int BOSS_LEVEL;
+
+    public Boss(int bossLevel) {
+        this.BOSS_LEVEL= bossLevel;
+        setArmor(12);
+        setBaseDamage(18);
+        setName(RNG.randomBossName());
+        setPortrait(RNG.randomBossPortrait());
+        setEquippedArmor(RNG.randomArmor(BOSS_LEVEL));
+        setEquippedWeapon(RNG.randomWeapon(BOSS_LEVEL));
+        scaleLevel();
+    }
+
+    private void scaleLevel() {
+        for (int i = 0; i < BOSS_LEVEL; i++) {
+            levelUp();
+        }
+    }
 }

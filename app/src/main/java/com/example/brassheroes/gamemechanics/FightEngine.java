@@ -23,11 +23,11 @@ public class FightEngine {
     private boolean isBossFight = false;
     Equipment[] drops;
 
-    private final double WEAPON_DROP_CHANCE = 0.15;
-    private final double ARMOR_DROP_CHANCE = 0.15;
+    private final double WEAPON_DROP_CHANCE = 0.35;
+    private final double ARMOR_DROP_CHANCE = 0.35;
     private final double BOSS_WEAPON_CHANCE = 0.45;
     private final double BOSS_ARMOR_CHANCE = 0.45;
-    private final int LOW_BOUND_EXP = 20;
+    private final int LOW_BOUND_EXP = 30;
     private final int HIGH_BOUND_EXP = 60;
     private final int GAME_PROGRESS_AMOUNT = 10;
     private final int BOSS_LEVEL_ADVANTAGE = 1;

@@ -2,6 +2,7 @@ package com.example.brassheroes.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,11 +47,13 @@ public class StoryActivity extends AppCompatActivity {
             String s = getString(R.string.win_message, getString(R.string.fight), expGained, player.toString(), printDrop(drop));
             storyTitle.setText(R.string.win_title);
             storyText.setText(s);
+            storyText.setMovementMethod(new ScrollingMovementMethod());
         }
         if (isFightWon && wasBossFight) {
             String s = getString(R.string.win_message, getString(R.string.boss_fight), expGained, player.toString(), printDrop(drop));
             storyTitle.setText(R.string.boss_win_title);
             storyText.setText(s);
+            storyText.setMovementMethod(new ScrollingMovementMethod());
         }
         if (!isFightWon) {
             storyTitle.setText(R.string.lost_fight_title);
@@ -83,6 +86,7 @@ public class StoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StoryActivity.this, MapActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

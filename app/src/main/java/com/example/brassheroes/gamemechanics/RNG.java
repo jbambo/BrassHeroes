@@ -29,6 +29,17 @@ import static com.example.brassheroes.R.drawable.enemy2;
 import static com.example.brassheroes.R.drawable.enemy3;
 import static com.example.brassheroes.R.drawable.enemy4;
 import static com.example.brassheroes.R.drawable.enemy5;
+import static com.example.brassheroes.R.drawable.map_0;
+import static com.example.brassheroes.R.drawable.map_1;
+import static com.example.brassheroes.R.drawable.map_10;
+import static com.example.brassheroes.R.drawable.map_2;
+import static com.example.brassheroes.R.drawable.map_3;
+import static com.example.brassheroes.R.drawable.map_4;
+import static com.example.brassheroes.R.drawable.map_5;
+import static com.example.brassheroes.R.drawable.map_6;
+import static com.example.brassheroes.R.drawable.map_7;
+import static com.example.brassheroes.R.drawable.map_8;
+import static com.example.brassheroes.R.drawable.map_9;
 import static com.example.brassheroes.R.drawable.sword;
 import static com.example.brassheroes.R.drawable.sword1;
 import static com.example.brassheroes.R.drawable.sword2;
@@ -117,6 +128,7 @@ public class RNG {
 
     private static final int[] armorIcons = new int[]{armor, armor1, armor2, armor3, armor5, armor6, armor7, armor8};
 
+    private static final int[] playerStoryMaps = new int[]{map_0, map_1, map_2, map_3, map_4, map_5, map_6, map_7, map_8, map_9, map_10};
 
     public static String randomName() {
         return firstNames[randomNumber(firstNames.length, 0)] + " "
@@ -129,12 +141,17 @@ public class RNG {
 
     public static int randomNumber(int end, int start) {
         Random r = new Random();
-        return r.nextInt(end-start) + start;
+        return r.nextInt(end - start) + start;
     }
 
     public static double randomNumber() {
         Random r = new Random();
         return r.nextDouble();
+    }
+
+    public static int getMap(int storyPoint) {
+        System.out.println();
+        return playerStoryMaps[storyPoint];
     }
 
     public static int randomEnemyPortrait() {
@@ -161,6 +178,7 @@ public class RNG {
         temp.setIcon(randomWeaponIcon());
         return temp;
     }
+
 
     public static Equipment randomArmor(int playersLevel) {
         boolean shouldRepeat = true;

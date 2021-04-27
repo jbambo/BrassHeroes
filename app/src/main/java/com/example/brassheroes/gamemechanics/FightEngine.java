@@ -20,22 +20,25 @@ public class FightEngine {
     private Enemy mEnemy;
     private Context mContext;
     private Persistence persistence;
-    private boolean isBossFight=false;
+    private boolean isBossFight = false;
     Equipment[] drops;
 
     private final double WEAPON_DROP_CHANCE = 0.15;
     private final double ARMOR_DROP_CHANCE = 0.15;
+    private final double BOSS_WEAPON_CHANCE = 0.45;
+    private final double BOSS_ARMOR_CHANCE = 0.45;
     private final int LOW_BOUND_EXP = 20;
     private final int HIGH_BOUND_EXP = 60;
-    private final int GAME_PROGRESS_AMOUNT = 15;
-    private final int BOSS_LEVEL_ADVANTAGE = 2;
-    private int bossLevel;
+    private final int GAME_PROGRESS_AMOUNT = 10;
+    private final int BOSS_LEVEL_ADVANTAGE = 1;
+
+    private int bossLevel, healthReturnValue;
 
 
     public FightEngine(Context context) {
         //1. get context
         this.mContext = context;
-        //2.create persistence object
+        //2.create playerManager object
         persistence = new Persistence(mContext);
         //3. get saved data
         this.mPlayer = persistence.getSavedGame();
@@ -51,36 +54,60 @@ public class FightEngine {
 
     private void spawnEnemy() {
         if (mPlayer.getGameProgress() >= 100) {
-            isBossFight=true;
+            isBossFight = true;
             mPlayer.setGameProgress(0);
-            this.mEnemy = new Boss(bossLevel);
+            spawnBoss();
         } else {
             this.mEnemy = new Enemy();
-            while (mPlayer.getLevel() > mEnemy.getLevel()) {
+            for (int i = 1; i < mPlayer.getLevel(); i++) {
                 mEnemy.gainExp(mEnemy.getExpNeeded());
             }
         }
+    }
 
+    private void spawnBoss() {
+        this.mEnemy = new Boss(bossLevel);
+        if (RNG.randomNumber() <= BOSS_ARMOR_CHANCE) {
+            mEnemy.setEquippedArmor(RNG.randomArmor(bossLevel));
+        }
+        if (RNG.randomNumber() <= BOSS_WEAPON_CHANCE) {
+            mEnemy.setEquippedArmor(RNG.randomWeapon(bossLevel));
+        }
     }
 
     public void attackMove(boolean isPlayer) {
         //check who makes the attack move
         if (isPlayer) {
-            receiveDamage(mEnemy, mPlayer);
-            //check if enemy has 0 health
-            if (mEnemy.getHealth() <= 0) {
-                winResult();
-            }
+            playerAttack();
+        } else if (!isPlayer) {
+            enemyAttack();
         }
-        if (!isPlayer) {
-            receiveDamage(mPlayer, mEnemy);
-            if (mPlayer.getHealth() <= 0) {
-                Toast.makeText(mContext, "you lost!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, StoryActivity.class);
-                intent.putExtra("won", false);
-                mContext.startActivity(intent);
-            }
+    }
+
+    //player attacks, return health of enemy
+    private void playerAttack() {
+        receiveDamage(mEnemy, mPlayer);
+        healthReturnValue = mEnemy.getHealth();
+        //check if enemy has 0 health
+        if (mEnemy.getHealth() <= 0) {
+            winResult();
         }
+    }
+
+    //enemy attacks, return health of player after attack
+    private void enemyAttack() {
+        receiveDamage(mPlayer, mEnemy);
+        healthReturnValue = mPlayer.getHealth();
+        if (mPlayer.getHealth() <= 0) {
+            Toast.makeText(mContext, "you lost!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext, StoryActivity.class);
+            intent.putExtra("won", false);
+            mContext.startActivity(intent);
+        }
+    }
+
+    public int getHealthReturnValue() {
+        return healthReturnValue;
     }
 
     //results of the fight
@@ -110,8 +137,8 @@ public class FightEngine {
             intent.putExtra("drop1", drops[0]);
         } else intent.putExtra("drop", 0);
 
-        if (isBossFight){
-            intent.putExtra("isBossFight",true);
+        if (isBossFight) {
+            intent.putExtra("isBossFight", true);
         }
 
         intent.putExtra("won", true);
@@ -123,8 +150,8 @@ public class FightEngine {
 
     public int rollItemDrop() {
         drops = new Equipment[2];
-        boolean first = rollWeapon();
-        boolean second = rollArmor();
+        boolean first = rollWeapon(WEAPON_DROP_CHANCE);
+        boolean second = rollArmor(ARMOR_DROP_CHANCE);
         if (first && second) {
             drops[0] = mInventory.get(mInventory.size() - 1);
             drops[1] = mInventory.get(mInventory.size() - 2);
@@ -135,31 +162,36 @@ public class FightEngine {
         } else return 0;
     }
 
-    private boolean rollWeapon() {
-        if (RNG.randomNumber() <= WEAPON_DROP_CHANCE) {
-            Equipment temp = RNG.randomWeapon(mPlayer.getLevel());
-            mInventory.add(temp);
+    private boolean rollWeapon(double chance) {
+        if (RNG.randomNumber() <= chance) {
+            mInventory.add(RNG.randomWeapon(mPlayer.getLevel()));
             return true;
         }
         return false;
     }
 
-    private boolean rollArmor() {
-        if (RNG.randomNumber() <= ARMOR_DROP_CHANCE) {
+    private boolean rollArmor(double chance) {
+        if (RNG.randomNumber() <= chance) {
             mInventory.add(RNG.randomArmor(mPlayer.getLevel()));
-            Equipment temp = RNG.randomArmor(mPlayer.getLevel());
-            mInventory.add(temp);
             return true;
         }
         return false;
     }
 
-    public GameEntity getPlayer() {
-        return mPlayer;
+    public int getEnemyPortrait() {
+        return mEnemy.getPortrait();
     }
 
-    public Enemy getEnemy() {
-        return mEnemy;
+    public String getEnemyName() {
+        return mEnemy.getName();
+    }
+
+    public int getEnemyTotalHealth() {
+        return mEnemy.getTotalHealth();
+    }
+
+    public String printEnemyClass() {
+        return mEnemy.printClass();
     }
 
     //calculate the damage taken
@@ -185,7 +217,7 @@ public class FightEngine {
             int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
             int totalArmor = target.getTotalArmor();
             int totalHealth = target.getHealth();
-            System.out.println("damage target has armor and attacker has weapon: " + damageCalculation(totalDamage, totalArmor));
+            // System.out.println("damage target has armor and attacker has weapon: " + damageCalculation(totalDamage, totalArmor));
             target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
         } else
             //case attacker has weapon
@@ -194,14 +226,14 @@ public class FightEngine {
                 int totalArmor = target.getTotalArmor();
                 int totalHealth = target.getHealth();
                 target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
-                System.out.println("damage attacker weapon equipped: " + damageCalculation(totalDamage, totalArmor));
+                //System.out.println("damage attacker weapon equipped: " + damageCalculation(totalDamage, totalArmor));
             } else {
                 //other cases
                 int totalDamage = attacker.getCurrentDamage();
                 int totalArmor = target.getTotalArmor();
                 int totalHealth = target.getHealth();
                 target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
-                System.out.println("damage none equipped: " + damageCalculation(totalDamage, totalArmor));
+                //System.out.println("damage none equipped: " + damageCalculation(totalDamage, totalArmor));
             }
     }
 }

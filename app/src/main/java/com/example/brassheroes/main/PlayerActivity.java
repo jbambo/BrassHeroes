@@ -10,29 +10,20 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.brassheroes.gamemechanics.CustomAdapter;
-import com.example.brassheroes.gamemechanics.Persistence;
 import com.example.brassheroes.R;
-import com.example.brassheroes.characters.GameEntity;
-import com.example.brassheroes.items.Equipment;
-
-import java.io.File;
-import java.util.ArrayList;
+import com.example.brassheroes.gamemechanics.CustomAdapter;
+import com.example.brassheroes.gamemechanics.PlayerManager;
 
 public class PlayerActivity extends AppCompatActivity {
     private TextView playerInfo;
 
     private ListView listView;
 
-    private GameEntity player;
-
-    private ArrayList<Equipment> inventory;
+    private PlayerManager playerManager;
 
     private Button btnGoBack;
 
     private ImageView playerPortrait;
-
-    private Persistence persistence;
 
 
     @Override
@@ -46,10 +37,7 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void initControls() {
-        persistence = new Persistence(this);
-
-        player = persistence.getSavedGame();
-        inventory = persistence.getSavedInventory();
+        playerManager = new PlayerManager(this);
 
         playerPortrait = findViewById(R.id.playerPortrait);
 
@@ -65,6 +53,7 @@ public class PlayerActivity extends AppCompatActivity {
                 goBack();
             }
         });
+
     }
 
     private void showPlayerInfo() {
@@ -73,14 +62,16 @@ public class PlayerActivity extends AppCompatActivity {
         //R.id.inventoryListDescription is the text view that will be populated with data
         //ArrayAdapter<Equipment> adapter = new ArrayAdapter<>
         //(this, R.layout.list_layout, R.id.inventoryListDescription, inventory);
-        CustomAdapter adapter = new CustomAdapter(inventory,this);
+        CustomAdapter adapter = new CustomAdapter(playerManager.getInventory(), this);
         listView.setAdapter(adapter);
-        playerPortrait.setImageResource(player.getPortrait());
-        playerInfo.setText(player.toString());
+        playerPortrait.setImageResource(playerManager.getPortrait());
+        playerInfo.setText(playerManager.printPlayer());
     }
+
     private void goBack() {
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
 }

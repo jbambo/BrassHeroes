@@ -99,6 +99,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 persistence.saveInitialData(inventory, username);
                 Intent intent = new Intent(this, MapActivity.class);
                 startActivity(intent);
+                this.finish();
             }
         }
     }

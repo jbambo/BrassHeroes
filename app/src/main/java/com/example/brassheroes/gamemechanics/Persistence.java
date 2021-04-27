@@ -39,8 +39,12 @@ public class Persistence {
             inventoryFiles = GENERAL_INVENTORY_SAVE_DIR.listFiles();  // files inventory dir
             //corresponding files for saving the player and inventory
             // are the first files in the list in each general directory
-            GAME_SAVE_DIR = new File(GENERAL_GAME_SAVE_DIR, savedGameFiles[0].getName());
-            INVENTORY_SAVE_DIR = new File(GENERAL_INVENTORY_SAVE_DIR, inventoryFiles[0].getName());
+            if (savedGameExists()) {
+                GAME_SAVE_DIR = new File(GENERAL_GAME_SAVE_DIR, savedGameFiles[0].getName());
+            }
+            if (savedInventoryExists()) {
+                INVENTORY_SAVE_DIR = new File(GENERAL_INVENTORY_SAVE_DIR, inventoryFiles[0].getName());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,6 +63,7 @@ public class Persistence {
             e.printStackTrace();
         }
     }
+
     public void saveData(ArrayList<Equipment> equipment) {
         Gson gson = new Gson();
         String saveJson = gson.toJson(equipment);

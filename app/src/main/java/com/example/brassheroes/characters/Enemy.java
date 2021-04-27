@@ -8,9 +8,9 @@ public class Enemy extends GameEntity {
         setName(RNG.randomName());
         setPortrait(RNG.randomEnemyPortrait());
         setArmor(8);
-        System.out.println("enemy starting armor:"+getArmor());
+       // System.out.println("enemy starting armor:"+getArmor());
         setBaseDamage(14);
-        System.out.println("enemy starting damage:"+getBaseDamage());
+       // System.out.println("enemy starting damage:"+getBaseDamage());
         if (getDamageType().equals("mental")){
             setProfession("Paladin");
         }

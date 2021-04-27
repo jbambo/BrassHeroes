@@ -10,26 +10,27 @@
         android:id="@+id/storyTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="Story screen"
         android:textSize="24sp"
-        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/storyText"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:layout_marginTop="60dp"
+        android:scrollbars="vertical"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/storyTitle"
         tools:text="@tools:sample/lorem/random" />
     <Button
         android:id="@+id/skipStory"
-        android:text="OKAY"
+        android:text="@string/allright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

@@ -12,9 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.brassheroes.R;
 import com.example.brassheroes.characters.Enemy;
-import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.gamemechanics.FightEngine;
-import com.example.brassheroes.gamemechanics.Persistence;
+import com.example.brassheroes.gamemechanics.PlayerManager;
 
 public class FightActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,11 +23,9 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     Button btnAttack, btnFlee, btnRest;
 
-    Enemy enemy;
-
-    GameEntity player;
-
     TextView playerMessage, enemyName, enemyClass;
+
+    PlayerManager playerManager;
 
     ProgressBar enemyHealth, playerHealth;
 
@@ -43,39 +40,33 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_fight);
         int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
-        initPlayer();
         initControls();
+        initDisplay();
     }
 
     private void attackMove() {
         //players turn
         fightEngine.attackMove(true);
-        enemy = fightEngine.getEnemy();
-        enemyHealth.setProgress(enemy.getHealth(), true);
+        enemyHealth.setProgress(fightEngine.getHealthReturnValue(), true);
         //enemys turn
         fightEngine.attackMove(false);
-        player = fightEngine.getPlayer();
-        playerHealth.setProgress(player.getHealth(), true);
+        playerHealth.setProgress(fightEngine.getHealthReturnValue(), true);
     }
 
     private void rest() {
         fightEngine.attackMove(false);
-        player = fightEngine.getPlayer();
-        playerHealth.setProgress(player.getHealth(),true);
+        playerHealth.setProgress(fightEngine.getHealthReturnValue(), true);
     }
 
-    private void initPlayer() {
+    private void initControls() {
+        //create player manager
+        playerManager = new PlayerManager(this);
         //create fight engine object
         fightEngine = new FightEngine(this);
-        //init player
-        player = fightEngine.getPlayer();
-
-        //get the spawned enemy
-        enemy = fightEngine.getEnemy();
     }
 
     //all the model fields
-    private void initControls() {
+    private void initDisplay() {
         btnRest = findViewById(REST_BUTTON_ID);
         btnAttack = findViewById(ATTACK_BUTTON_ID);
         btnFlee = findViewById(RUN_BUTTON_ID);
@@ -85,30 +76,31 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
         btnAttack.setOnClickListener(this);
 
         enemyHealth = findViewById(R.id.enemyHealth);
-        enemyHealth.setMax(enemy.getTotalHealth());
-        enemyHealth.setProgress(enemy.getTotalHealth());
+        enemyHealth.setMax(fightEngine.getEnemyTotalHealth());
+        enemyHealth.setProgress(fightEngine.getEnemyTotalHealth());
 
         playerHealth = findViewById(R.id.playerHealth);
-        playerHealth.setMax(player.getTotalHealth());
-        playerHealth.setProgress(player.getTotalHealth());
+        playerHealth.setMax(playerManager.getTotalHealth());
+        playerHealth.setProgress(playerManager.getTotalHealth());
 
         playerMessage = findViewById(R.id.playerMessage);
-        playerMessage.setText(getString(R.string.fight_player_move, player.getName()));
+        playerMessage.setText(getString(R.string.fight_player_move, playerManager.getName()));
 
         enemyPortrait = findViewById(R.id.enemyPortrait);
-        enemyPortrait.setImageResource(enemy.getPortrait());
+        enemyPortrait.setImageResource(fightEngine.getEnemyPortrait());
 
         enemyName = findViewById(R.id.enemyName);
-        enemyName.setText(enemy.getName());
+        enemyName.setText(fightEngine.getEnemyName());
 
         enemyClass = findViewById(R.id.enemyClass);
-        enemyClass.setText(enemy.printClass());
+        enemyClass.setText(fightEngine.printEnemyClass());
     }
 
     //leave the fight
     private void run() {
         Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     @Override

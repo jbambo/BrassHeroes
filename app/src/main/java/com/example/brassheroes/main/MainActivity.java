@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (persistence.savesBothExist()) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
+                this.finish();
             } else Toast.makeText(MainActivity.this, "no saved game", Toast.LENGTH_LONG).show();
         } else Toast.makeText(MainActivity.this, "never started a game", Toast.LENGTH_LONG).show();
     }

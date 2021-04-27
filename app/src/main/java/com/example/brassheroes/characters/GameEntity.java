@@ -219,7 +219,8 @@ public class GameEntity {
                 "\n\tArmor: " + getTotalArmor() +
                 "\n\tHealth: " + getTotalHealth() +
                 "\n\tLevel: " + getLevel()+
-                "\n\tExp: "+getExp()+" / "+getExpNeeded();
+                "\n\tExp: "+getExp()+" / "+getExpNeeded()+
+                "\n\tProgress: "+getGameProgress()+" / 100";
     }
 
 

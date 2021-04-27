@@ -20,6 +20,7 @@ public class FightEngine {
     private Enemy mEnemy;
     private Context mContext;
     private Persistence persistence;
+    private boolean isBossFight=false;
     Equipment[] drops;
 
     private final double WEAPON_DROP_CHANCE = 0.15;
@@ -50,6 +51,7 @@ public class FightEngine {
 
     private void spawnEnemy() {
         if (mPlayer.getGameProgress() >= 100) {
+            isBossFight=true;
             mPlayer.setGameProgress(0);
             this.mEnemy = new Boss(bossLevel);
         } else {
@@ -97,7 +99,7 @@ public class FightEngine {
         persistence.saveData(mPlayer);
         persistence.saveData(mInventory);
 
-        Toast.makeText(mContext, mContext.getString(R.string.win_message_player), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, mContext.getString(R.string.win_title), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(mContext, StoryActivity.class);
         if (drop == 2) {
             intent.putExtra("drop", 2);
@@ -107,6 +109,10 @@ public class FightEngine {
             intent.putExtra("drop", 1);
             intent.putExtra("drop1", drops[0]);
         } else intent.putExtra("drop", 0);
+
+        if (isBossFight){
+            intent.putExtra("isBossFight",true);
+        }
 
         intent.putExtra("won", true);
         intent.putExtra("expGained", expGained);

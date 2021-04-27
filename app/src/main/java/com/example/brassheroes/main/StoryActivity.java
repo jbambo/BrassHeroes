@@ -16,7 +16,7 @@ import com.example.brassheroes.items.Equipment;
 public class StoryActivity extends AppCompatActivity {
 
     TextView storyText, storyTitle;
-    boolean isFightWon;
+    boolean isFightWon, wasBossFight;
     int expGained, drop;
     Equipment drop1, drop2;
     GameEntity player;
@@ -32,26 +32,25 @@ public class StoryActivity extends AppCompatActivity {
         setStory();
     }
 
-    private String writeResults() {
-        //storyText.setText(loopString());
-       return "Fight results: " +
-                "\n\n\tExp gained: " + expGained +
-                "\n\nPlayer:\n" + player.toString() +
-                "\n\n\tItems found: " + printDrop(drop);
-    }
 
     private String printDrop(int dropAmt) {
-            if (dropAmt==2){
-                return "\n1. "+drop1.toString()+"\n2. "+drop2.toString();
-            }else if (dropAmt==1){
-                return "\n1. "+drop1.toString();
-            }else return "\n\t\t\tNo items found";
+        if (dropAmt == 2) {
+            return "\n1. " + drop1.toString() + "\n2. " + drop2.toString();
+        } else if (dropAmt == 1) {
+            return "\n1. " + drop1.toString();
+        } else return "\n\t\t\tNo items found";
     }
 
-    private void  setStory() {
-        if (isFightWon) {
-            storyTitle.setText(R.string.win_message_player);
-            storyText.setText(writeResults());
+    private void setStory() {
+        if (isFightWon && !wasBossFight) {
+            String s = getString(R.string.win_message, getString(R.string.fight), expGained, player.toString(), printDrop(drop));
+            storyTitle.setText(R.string.win_title);
+            storyText.setText(s);
+        }
+        if (isFightWon && wasBossFight) {
+            String s = getString(R.string.win_message, getString(R.string.boss_fight), expGained, player.toString(), printDrop(drop));
+            storyTitle.setText(R.string.boss_win_title);
+            storyText.setText(s);
         }
         if (!isFightWon) {
             storyTitle.setText(R.string.lost_fight_title);
@@ -64,6 +63,7 @@ public class StoryActivity extends AppCompatActivity {
         player = persistence.getSavedGame();
 
         isFightWon = getIntent().getBooleanExtra("won", true);
+        wasBossFight = getIntent().getBooleanExtra("isBossFight", false);
         expGained = getIntent().getIntExtra("expGained", 0);
         drop = getIntent().getIntExtra("drop", 0);
         if (drop != 0) {

@@ -16,15 +16,15 @@
     <string name="map_players_exp">Experience: </string>
     <string name="fight_player_move">Make your move, %1$s</string>
     <string name="map_story_progress">Story progress: </string>
-    <string name="win_message_player">You won, congratulations!</string>
+    <string name="boss_fight">Boss fight</string>
+    <string name="fight">Fight</string>
+    <string name="win_title">You won, congratulations!</string>
+    <string name="win_message">%1$s results"\n\n\t" Exp gained: %2$d"\n\n"Player:"\n"%3$s"\n\n\t"Items found:%4$s</string>
+    <string name="boss_win_title">You won, congratulations!"\n\n"The realm has one fallen ruler less!</string>
     <string name="lost_fight_title">You lost, try again!</string>
     <string name="lost_fight_message">Remember to check your equipment for new items!"\n\n"Hint: not all enemies are equal…</string>
     <string name="fight_run_btn">RUN</string>
     <string name="fight_attack_btn">ATTACK</string>
     <string name="fight_rest_btn">REST</string>
-    <string name="story1"></string>
-    <string name="story2"></string>
-    <string name="story3"></string>
-    <string name="story4"></string>
 
 </resources>

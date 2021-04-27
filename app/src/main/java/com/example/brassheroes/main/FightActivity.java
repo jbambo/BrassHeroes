@@ -15,17 +15,14 @@ import com.example.brassheroes.characters.Enemy;
 import com.example.brassheroes.characters.GameEntity;
 import com.example.brassheroes.gamemechanics.FightEngine;
 import com.example.brassheroes.gamemechanics.Persistence;
-import com.example.brassheroes.items.Equipment;
-
-import java.util.ArrayList;
 
 public class FightActivity extends AppCompatActivity implements View.OnClickListener {
 
     final int ATTACK_BUTTON_ID = R.id.attackBtn;
-
+    final int REST_BUTTON_ID = R.id.restBtn;
     final int RUN_BUTTON_ID = R.id.runBtn;
 
-    Button btnAttack, btnFlee;
+    Button btnAttack, btnFlee, btnRest;
 
     Enemy enemy;
 
@@ -39,8 +36,6 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     FightEngine fightEngine;
 
-    Persistence persistence;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +48,27 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void attackMove() {
+        //players turn
         fightEngine.attackMove(true);
         enemy = fightEngine.getEnemy();
         enemyHealth.setProgress(enemy.getHealth(), true);
-
+        //enemys turn
         fightEngine.attackMove(false);
         player = fightEngine.getPlayer();
         playerHealth.setProgress(player.getHealth(), true);
     }
 
+    private void rest() {
+        fightEngine.attackMove(false);
+        player = fightEngine.getPlayer();
+        playerHealth.setProgress(player.getHealth(),true);
+    }
+
     private void initPlayer() {
-        //create persistence object
-        persistence = new Persistence(this);
-
-        //init player
-        player = persistence.getSavedGame();
-
         //create fight engine object
         fightEngine = new FightEngine(this);
+        //init player
+        player = fightEngine.getPlayer();
 
         //get the spawned enemy
         enemy = fightEngine.getEnemy();
@@ -78,21 +76,24 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
 
     //all the model fields
     private void initControls() {
+        btnRest = findViewById(REST_BUTTON_ID);
         btnAttack = findViewById(ATTACK_BUTTON_ID);
         btnFlee = findViewById(RUN_BUTTON_ID);
+
+        btnRest.setOnClickListener(this);
         btnFlee.setOnClickListener(this);
         btnAttack.setOnClickListener(this);
 
         enemyHealth = findViewById(R.id.enemyHealth);
-        enemyHealth.setMax(enemy.getMaxHealth());
-        enemyHealth.setProgress(enemy.getMaxHealth());
+        enemyHealth.setMax(enemy.getTotalHealth());
+        enemyHealth.setProgress(enemy.getTotalHealth());
 
         playerHealth = findViewById(R.id.playerHealth);
-        playerHealth.setMax(player.getMaxHealth());
-        playerHealth.setProgress(player.getMaxHealth());
+        playerHealth.setMax(player.getTotalHealth());
+        playerHealth.setProgress(player.getTotalHealth());
 
         playerMessage = findViewById(R.id.playerMessage);
-        playerMessage.setText(getString(R.string.fightPlayerMove, player.getName()));
+        playerMessage.setText(getString(R.string.fight_player_move, player.getName()));
 
         enemyPortrait = findViewById(R.id.enemyPortrait);
         enemyPortrait.setImageResource(enemy.getPortrait());
@@ -118,6 +119,9 @@ public class FightActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case RUN_BUTTON_ID:
                 run();
+                break;
+            case REST_BUTTON_ID:
+                rest();
                 break;
         }
     }

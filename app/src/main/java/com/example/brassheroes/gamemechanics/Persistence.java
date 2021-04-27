@@ -44,12 +44,10 @@ public class Persistence {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     //overloaded functions for general data saving
     public void saveData(GameEntity player) {
-
         Gson gson = new Gson();
         String saveJson = gson.toJson(player);
         try {
@@ -61,7 +59,6 @@ public class Persistence {
             e.printStackTrace();
         }
     }
-
     public void saveData(ArrayList<Equipment> equipment) {
         Gson gson = new Gson();
         String saveJson = gson.toJson(equipment);

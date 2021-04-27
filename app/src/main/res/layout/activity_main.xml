@@ -33,7 +33,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/newGame" />
+            android:text="@string/new_game" />
 
         <Button
             android:id="@+id/continueBtn"
@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/newGameBtn"
             android:layout_margin="10dp"
-            android:text="@string/continueGame" />
+            android:text="@string/continue_game" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

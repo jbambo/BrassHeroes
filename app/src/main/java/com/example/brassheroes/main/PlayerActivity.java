@@ -68,8 +68,6 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void showPlayerInfo() {
-        playerInfo.setText(player.toString());
-
         //create an adapter for the list view
         //single row is defined in: list_layout.xml
         //R.id.inventoryListDescription is the text view that will be populated with data
@@ -78,6 +76,7 @@ public class PlayerActivity extends AppCompatActivity {
         CustomAdapter adapter = new CustomAdapter(inventory,this);
         listView.setAdapter(adapter);
         playerPortrait.setImageResource(player.getPortrait());
+        playerInfo.setText(player.toString());
     }
     private void goBack() {
         Intent intent = new Intent(this, MapActivity.class);

@@ -12,6 +12,7 @@ import com.example.brassheroes.items.Equipment;
 import com.example.brassheroes.main.StoryActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FightEngine {
     private GameEntity mPlayer;
@@ -19,6 +20,7 @@ public class FightEngine {
     private Enemy mEnemy;
     private Context mContext;
     private Persistence persistence;
+    Equipment[] drops;
 
     private final double WEAPON_DROP_CHANCE = 0.15;
     private final double ARMOR_DROP_CHANCE = 0.15;
@@ -40,6 +42,10 @@ public class FightEngine {
         this.bossLevel = mPlayer.getLevel() + BOSS_LEVEL_ADVANTAGE;
         //4. spawn the enemy
         spawnEnemy();
+
+        //5. initialize the health to max values before fight
+        mPlayer.setHealth(mPlayer.getTotalHealth());
+        mEnemy.setHealth(mEnemy.getTotalHealth());
     }
 
     private void spawnEnemy() {
@@ -78,29 +84,68 @@ public class FightEngine {
     //results of the fight
     public void winResult() {
         //gain experience
-        mPlayer.gainExp(RNG.randomNumber(HIGH_BOUND_EXP, LOW_BOUND_EXP));
-        //set health to full after the fight
-        mPlayer.setHealth(mPlayer.getMaxHealth());
+        int expGained = RNG.randomNumber(HIGH_BOUND_EXP, LOW_BOUND_EXP);
+        mPlayer.gainExp(expGained);
+        //restore health to full after the fight
+        mPlayer.setHealth(mPlayer.getTotalHealth());
         //roll item drop
-        rollItemDrop();
+        int drop = rollItemDrop();
+        System.out.println("drops" + Arrays.toString(drops));
         //set story progress
         mPlayer.setGameProgress(mPlayer.getGameProgress() + GAME_PROGRESS_AMOUNT);
         //save the data
         persistence.saveData(mPlayer);
         persistence.saveData(mInventory);
-        Toast.makeText(mContext, mContext.getString(R.string.winMessagePlayer), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(mContext, mContext.getString(R.string.win_message_player), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(mContext, StoryActivity.class);
+        if (drop == 2) {
+            intent.putExtra("drop", 2);
+            intent.putExtra("drop1", drops[0]);
+            intent.putExtra("drop2", drops[1]);
+        } else if (drop == 1) {
+            intent.putExtra("drop", 1);
+            intent.putExtra("drop1", drops[0]);
+        } else intent.putExtra("drop", 0);
+
         intent.putExtra("won", true);
+        intent.putExtra("expGained", expGained);
+
+
         mContext.startActivity(intent);
     }
 
-    public void rollItemDrop() {
+    public int rollItemDrop() {
+        drops = new Equipment[2];
+        boolean first = rollWeapon();
+        boolean second = rollArmor();
+        if (first && second) {
+            drops[0] = mInventory.get(mInventory.size() - 1);
+            drops[1] = mInventory.get(mInventory.size() - 2);
+            return 2;
+        } else if (first || second) {
+            drops[0] = mInventory.get(mInventory.size() - 1);
+            return 1;
+        } else return 0;
+    }
+
+    private boolean rollWeapon() {
         if (RNG.randomNumber() <= WEAPON_DROP_CHANCE) {
-            mInventory.add(RNG.randomWeapon(mPlayer.getLevel()));
+            Equipment temp = RNG.randomWeapon(mPlayer.getLevel());
+            mInventory.add(temp);
+            return true;
         }
+        return false;
+    }
+
+    private boolean rollArmor() {
         if (RNG.randomNumber() <= ARMOR_DROP_CHANCE) {
             mInventory.add(RNG.randomArmor(mPlayer.getLevel()));
+            Equipment temp = RNG.randomArmor(mPlayer.getLevel());
+            mInventory.add(temp);
+            return true;
         }
+        return false;
     }
 
     public GameEntity getPlayer() {
@@ -111,43 +156,46 @@ public class FightEngine {
         return mEnemy;
     }
 
-    private int damageCalculation(int enemyDamage, int targetArmor, int targetHealth) {
-        if ((enemyDamage - targetArmor <= 5)) {
-            return (int) (targetHealth - (enemyDamage * 0.4));
-        } else
-            return (targetHealth - (enemyDamage - targetArmor));
+    //calculate the damage taken
+    private int damageCalculation(int enemyDamage, int targetArmor) {
+        //if damage - armor would be  lower or equal  10, damage will be 70% effective
+        // eg. damage: 100, armor 90, health 100
+        //100-90<= 10 so --> 100*0.7=70 ---> 70-90=20 >10 so  damage dealt will be 70 instead of 100
+        if ((enemyDamage - targetArmor <= 10)) {
+            int damageResult = (int) (enemyDamage * 0.7);
+            return damageResult;
+        } else {
+            //if damage-armor> 10
+            int damageResult = (enemyDamage - targetArmor);
+            return damageResult;
+        }
+
     }
 
     public void receiveDamage(GameEntity target, GameEntity attacker) {
-        //case both have sth equipped
+        //case attacker has weapon target has armor equipped
         if (target.isArmorEquipped() && attacker.isWeaponEquipped()) {
             //calculate total values
             int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
-            int totalArmor = target.getArmor() + target.getEquippedArmor().getArmorStat();
-            int totalHealth = target.getHealth() + target.getEquippedArmor().getHealthStat();
-            System.out.println("damage both equipped: " + damageCalculation(totalDamage, totalArmor, totalHealth));
-            target.setHealth(damageCalculation(totalDamage, totalArmor, totalHealth));
-        }else
-        //case only target
-        if (target.isArmorEquipped()) {
-            int totalArmor = target.getArmor() + target.getEquippedArmor().getArmorStat();
-            int totalHealth = target.getHealth() + target.getEquippedArmor().getHealthStat();
-            target.setHealth(damageCalculation(attacker.getCurrentDamage(), totalArmor, totalHealth));
-            System.out.println("damage armor equipped: " + damageCalculation(attacker.getCurrentDamage(), totalArmor, totalHealth));
-
-        }else
-        //case only attacker
-        if (attacker.isWeaponEquipped()) {
-            int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
-            target.setHealth(damageCalculation(totalDamage, target.getArmor(), target.getHealth()));
-            System.out.println("damage weapon equipped: " + damageCalculation(totalDamage, target.getArmor(), target.getHealth()));
-
-        }else
-        //case none
-        if (!attacker.isWeaponEquipped() && !target.isArmorEquipped()) {
-            target.setHealth(damageCalculation(attacker.getCurrentDamage(), target.getArmor(), target.getHealth()));
-            System.out.println("damage none equipped: " + damageCalculation(attacker.getCurrentDamage(), target.getArmor(), target.getHealth()));
-        }
-
+            int totalArmor = target.getTotalArmor();
+            int totalHealth = target.getHealth();
+            System.out.println("damage target has armor and attacker has weapon: " + damageCalculation(totalDamage, totalArmor));
+            target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
+        } else
+            //case attacker has weapon
+            if (attacker.isWeaponEquipped()) {
+                int totalDamage = attacker.getCurrentDamage() + attacker.getEquippedWeapon().getDamageStat();
+                int totalArmor = target.getTotalArmor();
+                int totalHealth = target.getHealth();
+                target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
+                System.out.println("damage attacker weapon equipped: " + damageCalculation(totalDamage, totalArmor));
+            } else {
+                //other cases
+                int totalDamage = attacker.getCurrentDamage();
+                int totalArmor = target.getTotalArmor();
+                int totalHealth = target.getHealth();
+                target.setHealth(totalHealth - damageCalculation(totalDamage, totalArmor));
+                System.out.println("damage none equipped: " + damageCalculation(totalDamage, totalArmor));
+            }
     }
 }

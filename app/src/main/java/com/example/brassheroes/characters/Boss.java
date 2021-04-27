@@ -11,13 +11,14 @@ public class Boss extends Enemy {
         setBaseDamage(18);
         setName(RNG.randomBossName());
         setPortrait(RNG.randomBossPortrait());
+        scaleLevel();
         setEquippedArmor(RNG.randomArmor(BOSS_LEVEL));
         setEquippedWeapon(RNG.randomWeapon(BOSS_LEVEL));
-        scaleLevel();
+        System.out.println("boss stats: "+toString());
     }
 
     private void scaleLevel() {
-        for (int i = 0; i < BOSS_LEVEL; i++) {
+        for (int i = 1; i < BOSS_LEVEL; i++) {
             levelUp();
         }
     }

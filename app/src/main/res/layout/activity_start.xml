@@ -21,7 +21,7 @@
             android:id="@+id/iamText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/iam"
+            android:text="@string/i_am"
             android:textSize="10pt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -33,7 +33,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/iamText"
             android:background="@color/transparent"
-            android:hint="@string/playersName"
+            android:hint="@string/players_name"
             android:inputType="text"
             android:textColorHint="@color/grey"
             android:textColor="@color/white"
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
-            android:text="@string/knightClass"
+            android:text="@string/knight_class"
             android:clickable="false"/>
 
         <Button
@@ -98,7 +98,7 @@
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass1"
-            android:text="@string/paladinClass"
+            android:text="@string/paladin_class"
             android:clickable="false"/>
 
         <Button
@@ -108,7 +108,7 @@
             android:layout_below="@id/imgKnight"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btnClass2"
-            android:text="@string/wizardClass"
+            android:text="@string/wizard_class"
             android:clickable="false"/>
     </RelativeLayout>
 
@@ -117,7 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="@string/startGame"
+        android:text="@string/start_game"
         android:textSize="20pt"
         app:layout_constraintEnd_toEndOf="@id/classLayout"
         app:layout_constraintStart_toStartOf="@id/classLayout"

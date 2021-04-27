@@ -69,8 +69,7 @@ public class RNG {
             new Weapon("Magic Sword", 85, 0, 0, 17),
             new Weapon("Arcane Sword", 65, 0, 0, 12),
             new Weapon("Mythril Sword", 80, 0, 0, 15),
-            new Weapon("Hallowed Sword", 90, 0, 0, 19)
-    };
+            new Weapon("Hallowed Sword", 90, 0, 0, 19),};
 
     //list of available armors
     private static final Equipment[] armors = {
@@ -128,9 +127,9 @@ public class RNG {
         return bossNames[randomNumber(bossNames.length, 0)];
     }
 
-    public static int randomNumber(int range, int start) {
+    public static int randomNumber(int end, int start) {
         Random r = new Random();
-        return r.nextInt(range) + start;
+        return r.nextInt(end-start) + start;
     }
 
     public static double randomNumber() {

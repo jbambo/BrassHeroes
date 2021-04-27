@@ -5,7 +5,7 @@ import com.example.brassheroes.items.Equipment;
 public class GameEntity {
 
     private final int HEALTH_PER_LV_INCREASE = 10;
-    private  final int EXP_NEEDED_INCREASE = 20;
+    private final int EXP_NEEDED_INCREASE = 20;
 
     private String name;
     private String profession;
@@ -14,18 +14,20 @@ public class GameEntity {
     private int damageInc = 10;
     private int currentDamage;
     private int armor = 8;
+    private int totalArmor;
     private int armorInc = 5;
     private int health = 100;
     private int maxHealth = 100;
+    private int totalHealth;
     private int healthInc = 20;
     private int level = 1;
     private int exp = 0;
     private int expNeeded = 100;
     private int portrait;
-    private int gameProgress=0;
+    private int gameProgress = 0;
 
-    private Equipment equippedArmor=null;
-    private Equipment equippedWeapon=null;
+    private Equipment equippedArmor = null;
+    private Equipment equippedWeapon = null;
 
 
     public GameEntity(
@@ -167,7 +169,6 @@ public class GameEntity {
         //increase armor
         setArmor(getArmor() + getArmorInc());
 
-
     }
 
     //gain experience
@@ -212,12 +213,13 @@ public class GameEntity {
     @Override
     public String toString() {
         return "Name: " + getName() +
-                "\nProfession: " + getProfession() +
-                "\nDamage Type: " + getDamageType() +
-                "\nDamage: " + getCurrentDamage() +
-                "\nArmor: " + getArmor() +
-                "\nHealth: " + getMaxHealth() +
-                "\nLevel: " + getLevel();
+                "\n\tProfession: " + getProfession() +
+                "\n\tDamage Type: " + getDamageType() +
+                "\n\tDamage: " + getCurrentDamage() +
+                "\n\tArmor: " + getTotalArmor() +
+                "\n\tHealth: " + getTotalHealth() +
+                "\n\tLevel: " + getLevel()+
+                "\n\tExp: "+getExp()+" / "+getExpNeeded();
     }
 
 
@@ -243,12 +245,14 @@ public class GameEntity {
 
     public void setEquippedArmor(Equipment equippedArmor) {
         this.equippedArmor = equippedArmor;
+        setTotalHealth();
+        setTotalArmor();
     }
 
-    public boolean isArmorEquipped(){
-        if (this.equippedArmor==null){
+    public boolean isArmorEquipped() {
+        if (this.equippedArmor == null) {
             return false;
-        }else return true;
+        } else return true;
     }
 
     public Equipment getEquippedWeapon() {
@@ -258,10 +262,35 @@ public class GameEntity {
     public void setEquippedWeapon(Equipment equippedWeapon) {
         this.equippedWeapon = equippedWeapon;
     }
-    public boolean isWeaponEquipped(){
-        if (this.equippedWeapon==null){
+
+    public boolean isWeaponEquipped() {
+        if (this.equippedWeapon == null) {
             return false;
-        }else return true;
+        } else return true;
     }
 
+    public int getTotalHealth() {
+        if (isArmorEquipped()){
+            return totalHealth;
+        }
+        else return maxHealth;
+    }
+
+    public void setTotalHealth() {
+        if (isArmorEquipped()) {
+            this.totalHealth = maxHealth + equippedArmor.getHealthStat();
+        } else this.totalHealth = maxHealth;
+    }
+
+    public int getTotalArmor() {
+        if (isArmorEquipped()){
+            return totalArmor;
+        }else return armor;
+    }
+
+    public void setTotalArmor() {
+        if (isArmorEquipped()){
+            this.totalArmor = armor+equippedArmor.getArmorStat();
+        }else this.totalArmor=armor;
+    }
 }

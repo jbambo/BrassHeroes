@@ -1,6 +1,9 @@
 package com.example.brassheroes.items;
 
-public class Equipment {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Equipment implements Parcelable {
     private String name ;
     private String type;
     private int damageStat;
@@ -20,6 +23,28 @@ public class Equipment {
 
     public Equipment() {
     }
+
+    public Equipment(Parcel in) {
+        name = in.readString();
+        type = in.readString();
+        damageStat = in.readInt();
+        healthStat = in.readInt();
+        armorStat = in.readInt();
+        levelRequirement = in.readInt();
+        icon = in.readInt();
+    }
+
+    public static final Creator<Equipment> CREATOR = new Creator<Equipment>() {
+        @Override
+        public Equipment createFromParcel(Parcel in) {
+            return new Equipment(in);
+        }
+
+        @Override
+        public Equipment[] newArray(int size) {
+            return new Equipment[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -84,5 +109,21 @@ public class Equipment {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeInt(damageStat);
+        dest.writeInt(healthStat);
+        dest.writeInt(armorStat);
+        dest.writeInt(levelRequirement);
+        dest.writeInt(icon);
     }
 }

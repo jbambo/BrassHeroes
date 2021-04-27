@@ -67,7 +67,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapPlayersName" />
+                android:text="@string/map_players_name" />
 
             <TextView
                 android:id="@+id/playerNameMap"
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapPlayersExp" />
+                android:text="@string/map_players_exp" />
 
             <ProgressBar
                 android:id="@+id/mapPlayerExp"
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mapStoryProgress" />
+                android:text="@string/map_story_progress" />
 
             <ProgressBar
                 android:id="@+id/mapPlayerProgress"

@@ -21,7 +21,7 @@
     <string name="fight">Fight</string>
     <string name="win_title">You won, congratulations!</string>
     <string name="win_message">%1$s results"\n\n\t" Exp gained: %2$d"\n\n"Player:"\n"%3$s"\n\n\t"Items found:%4$s</string>
-    <string name="boss_win_title">You won, congratulations!"\n\n"The realm has one fallen ruler less!</string>
+    <string name="boss_win_title">You won, congratulations!"\n\n"The realm has one corrupted ruler less!</string>
     <string name="lost_fight_title">You lost, try again!</string>
     <string name="lost_fight_message">Remember to check your equipment for new items!"\n\n"Hint: not all enemies are equal…</string>
     <string name="fight_run_btn">RUN</string>
